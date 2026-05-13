@@ -181,7 +181,7 @@ function updateScrollProgress() {
 document.addEventListener('DOMContentLoaded', updateScrollProgress);
 const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
     if (scrollProgressBar) {
-      scrollProgressBar.style.width = ${progress}%;
+      scrollProgressBar.style.width = `${progress}%`;
     }
   }
 
