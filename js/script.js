@@ -179,3 +179,12 @@ function updateScrollProgress() {
 
 // Инициализируем при загрузке страницы
 document.addEventListener('DOMContentLoaded', updateScrollProgress);
+const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
+    if (scrollProgressBar) {
+      scrollProgressBar.style.width = ${progress}%;
+    }
+  }
+
+  // Инициализация прогресс-бара
+  updateScrollProgress();
+});
