@@ -24,7 +24,7 @@ let isPreloaderHidden = false;
 let progress = 0;
 let interval;
 
-// Функция обновления прогресса
+// Функция обновления прогресса прелоадера
 function updateProgress() {
   progress += Math.random() * 3 + 1;
   if (progress >= 100) {
@@ -32,19 +32,14 @@ function updateProgress() {
     clearInterval(interval);
     hidePreloader();
   }
-  if (progressFill) {
-    progressFill.style.width = `${progress}%`;
-  }
-  if (progressText) {
-    progressText.textContent = `${Math.floor(progress)}%`;
-  }
+  if (progressFill) progressFill.style.width = `${progress}%`;
+  if (progressText) progressText.textContent = `${Math.floor(progress)}%`;
 }
 
 // Функция скрытия прелоадера
 function hidePreloader() {
   if (isPreloaderHidden) return;
   isPreloaderHidden = true;
-  
   setTimeout(() => {
     if (preloader) {
       preloader.classList.add('loaded');
@@ -117,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // 3. Дополнительная анимация: пульсация первой кнопки «Купить»
+  // 3. Пульсация первой кнопки «Купить»
   const firstBuyButton = document.querySelector('.btn-buy');
   if (firstBuyButton) {
     setTimeout(() => {
@@ -154,21 +149,24 @@ document.addEventListener('DOMContentLoaded', function() {
       scrollProgress = (scrollTop / docHeight) * 100;
     }
     
-    scrollProgress = Math.min(Math.max(scrollProgress, 0), 100);
-    
     const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
     if (scrollProgressBar) {
-      scrollProgressBar.style.width = `${scrollProgress}%`;
+      scrollProgressBar.style.width = `${Math.min(Math.max(scrollProgress, 0), 100)}%`;
     }
   }
 
   window.addEventListener('scroll', updateScrollProgress);
   window.addEventListener('resize', updateScrollProgress);
   
-  // Инициализация
+  // Инициализация прогресс-бара
   updateScrollProgress();
 });
 
-// Дополнительная инициализация прогресс-бара (на всякий случай)
-document.addEventListener('DOMContentLoaded', updateScrollProgress);
+// Дополнительная инициализация (исправлено — убрана ошибка с переменной progress)
+document.addEventListener('DOMContentLoaded', function() {
+  const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
+  if (scrollProgressBar) {
+    scrollProgressBar.style.width = '0%';
+  }
+});
 </script>
