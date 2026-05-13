@@ -1,3 +1,4 @@
+<script>
 // Создаём прелоадер динамически
 const preloader = document.createElement('div');
 preloader.id = 'preloader';
@@ -19,21 +20,18 @@ document.body.appendChild(preloader);
 const progressFill = preloader.querySelector('.progress-fill');
 const progressText = preloader.querySelector('.progress-text');
 
-let isPreloaderHidden = false; // Флаг состояния прелоадера
+let isPreloaderHidden = false;
 let progress = 0;
 let interval;
 
 // Функция обновления прогресса
 function updateProgress() {
-  progress += Math.random() * 3 + 1; // Плавное увеличение: 1–4 % за шаг (было 2–10 %)
-
+  progress += Math.random() * 3 + 1;
   if (progress >= 100) {
     progress = 100;
     clearInterval(interval);
     hidePreloader();
   }
-
-  // Обновляем оба элемента одновременно для идеальной синхронизации
   if (progressFill) {
     progressFill.style.width = `${progress}%`;
   }
@@ -44,9 +42,9 @@ function updateProgress() {
 
 // Функция скрытия прелоадера
 function hidePreloader() {
-  if (isPreloaderHidden) return; // Если уже скрыт — выходим
+  if (isPreloaderHidden) return;
   isPreloaderHidden = true;
-
+  
   setTimeout(() => {
     if (preloader) {
       preloader.classList.add('loaded');
@@ -60,33 +58,33 @@ function hidePreloader() {
 }
 
 // Запускаем анимацию прогресса
-interval = setInterval(updateProgress, 150); // Каждые 150 мс вместо 100 мс — более плавная анимация
+interval = setInterval(updateProgress, 150);
 
-// Принудительное скрытие через 15 секунд (защита от зависаний)
+// Принудительное скрытие через 15 секунд
 setTimeout(() => {
   if (preloader && !preloader.classList.contains('loaded')) {
-    clearInterval(interval); // Очищаем интервал
+    clearInterval(interval);
     progress = 100;
     if (progressFill) progressFill.style.width = '100%';
     if (progressText) progressText.textContent = '100%';
     hidePreloader();
   }
-}, 15000); // Увеличили время с 10 до 15 секунд
+}, 15000);
 
 // Дополнительная проверка на загрузку всех ресурсов
 window.addEventListener('load', () => {
   setTimeout(() => {
-    clearInterval(interval); // Очищаем интервал
+    clearInterval(interval);
     hidePreloader();
   }, 500);
 });
 
-// Скрипт для лендинга: анимации и интерактивность
+// ====================== СКРИПТ ДЛЯ ЛЕНДИНГА ======================
 document.addEventListener('DOMContentLoaded', function() {
+
   // 1. Анимация появления карточек товаров при скролле
   const productCards = document.querySelectorAll('.product-card');
   let cardObserver;
-
   if (productCards.length > 0) {
     cardObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -98,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     });
-
     productCards.forEach(card => {
       cardObserver.observe(card);
     });
@@ -108,10 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
-
       const targetId = this.getAttribute('href');
       if (targetId === '#' || !targetId.startsWith('#')) return;
-
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         window.scrollTo({
@@ -148,43 +143,32 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-});
 
-// Прогресс‑бар при скролле (прогресс‑бар в верхней части экрана)
-window.addEventListener('scroll', updateScrollProgress);
-window.addEventListener('resize', updateScrollProgress); // При изменении размера окна
-
-function updateScrollProgress() {
-  // Получаем текущую позицию скролла
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-  // Полная высота документа
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-  // Рассчитываем процент прокрутки
-  let progress = 0;
-  if (docHeight > 0) {
-    progress = (scrollTop / docHeight) * 100;
-  }
-
-  // Ограничиваем значение 0–100 %
-  progress = Math.min(Math.max(progress, 0), 100);
-
-  // Обновляем ширину прогресс‑бара
-  const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
-  if (scrollProgressBar) {
-    scrollProgressBar.style.width = `${progress}%`;
-  }
-}
-
-// Инициализируем при загрузке страницы
-document.addEventListener('DOMContentLoaded', updateScrollProgress);
-const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
+  // ====================== ПРОГРЕСС-БАР ПРИ СКРОЛЛЕ ======================
+  function updateScrollProgress() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    let scrollProgress = 0;
+    
+    if (docHeight > 0) {
+      scrollProgress = (scrollTop / docHeight) * 100;
+    }
+    
+    scrollProgress = Math.min(Math.max(scrollProgress, 0), 100);
+    
+    const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
     if (scrollProgressBar) {
-      scrollProgressBar.style.width = `${progress}%`;
+      scrollProgressBar.style.width = `${scrollProgress}%`;
     }
   }
 
-  // Инициализация прогресс-бара
+  window.addEventListener('scroll', updateScrollProgress);
+  window.addEventListener('resize', updateScrollProgress);
+  
+  // Инициализация
   updateScrollProgress();
 });
+
+// Дополнительная инициализация прогресс-бара (на всякий случай)
+document.addEventListener('DOMContentLoaded', updateScrollProgress);
+</script>
