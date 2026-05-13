@@ -1,4 +1,3 @@
-<script>
 // Создаём прелоадер динамически
 const preloader = document.createElement('div');
 preloader.id = 'preloader';
@@ -66,7 +65,7 @@ setTimeout(() => {
   }
 }, 15000);
 
-// Дополнительная проверка на загрузку всех ресурсов
+// Скрытие после полной загрузки
 window.addEventListener('load', () => {
   setTimeout(() => {
     clearInterval(interval);
@@ -74,10 +73,10 @@ window.addEventListener('load', () => {
   }, 500);
 });
 
-// ====================== СКРИПТ ДЛЯ ЛЕНДИНГА ======================
+// ====================== ОСНОВНОЙ КОД САЙТА ======================
 document.addEventListener('DOMContentLoaded', function() {
 
-  // 1. Анимация появления карточек товаров при скролле
+  // Анимация карточек
   const productCards = document.querySelectorAll('.product-card');
   let cardObserver;
   if (productCards.length > 0) {
@@ -87,86 +86,49 @@ document.addEventListener('DOMContentLoaded', function() {
           entry.target.classList.add('visible');
         }
       });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-    productCards.forEach(card => {
-      cardObserver.observe(card);
-    });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    productCards.forEach(card => cardObserver.observe(card));
   }
 
-  // 2. Плавный скролл для навигации
+  // Плавный скролл
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
       const targetId = this.getAttribute('href');
       if (targetId === '#' || !targetId.startsWith('#')) return;
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 80,
-          behavior: 'smooth'
-        });
+      const target = document.querySelector(targetId);
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
       }
     });
   });
 
-  // 3. Пульсация первой кнопки «Купить»
+  // Пульсация кнопки
   const firstBuyButton = document.querySelector('.btn-buy');
   if (firstBuyButton) {
-    setTimeout(() => {
-      firstBuyButton.style.animation = 'pulse 2s infinite';
-    }, 2000);
+    setTimeout(() => firstBuyButton.style.animation = 'pulse 2s infinite', 2000);
   }
 
-  // 4. Обработка нажатия кнопок «Купить»
+  // Кнопки "Купить"
   document.querySelectorAll('.btn-buy').forEach(button => {
     button.addEventListener('click', function() {
-      console.log('Нажата кнопка "Купить" для товара:', this.closest('.product-card').querySelector('h3').textContent);
+      const name = this.closest('.product-card')?.querySelector('h3')?.textContent;
+      console.log('Купить:', name);
     });
   });
 
-  // Функция обновления анимации при изменении размера окна
-  window.addEventListener('resize', function() {
-    if (!cardObserver) return;
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach(card => {
-      if (!card.classList.contains('visible')) {
-        cardObserver.unobserve(card);
-        cardObserver.observe(card);
-      }
-    });
-  });
-
-  // ====================== ПРОГРЕСС-БАР ПРИ СКРОЛЛЕ ======================
+  // Прогресс-бар скролла
   function updateScrollProgress() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    let scrollProgress = 0;
+    let scrollProgress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     
-    if (docHeight > 0) {
-      scrollProgress = (scrollTop / docHeight) * 100;
-    }
-    
-    const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
-    if (scrollProgressBar) {
-      scrollProgressBar.style.width = `${Math.min(Math.max(scrollProgress, 0), 100)}%`;
-    }
+    const bar = document.querySelector('.scroll-progress .progress-bar');
+    if (bar) bar.style.width = `${Math.min(Math.max(scrollProgress, 0), 100)}%`;
   }
 
   window.addEventListener('scroll', updateScrollProgress);
   window.addEventListener('resize', updateScrollProgress);
-  
-  // Инициализация прогресс-бара
   updateScrollProgress();
 });
-
-// Дополнительная инициализация (исправлено — убрана ошибка с переменной progress)
-document.addEventListener('DOMContentLoaded', function() {
-  const scrollProgressBar = document.querySelector('.scroll-progress .progress-bar');
-  if (scrollProgressBar) {
-    scrollProgressBar.style.width = '0%';
-  }
-});
-</script>
