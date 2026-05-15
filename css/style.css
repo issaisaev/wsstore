@@ -332,7 +332,7 @@ transform: translateY(-50%) scale(1.1);
 }
 @media (max-width: 768px) {
   .delivery-note {
-    font-size: 0.4rem; /* Ещё мельче на мобильных */
+    font-size: 0.5rem; /* Ещё мельче на мобильных */
   }
 }
 /* ==================== ТОЧКИ-ИНДИКАТОРЫ ==================== */
