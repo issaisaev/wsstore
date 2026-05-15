@@ -224,22 +224,30 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCarousel();
     });
 });
-document.querySelectorAll('.section-header').forEach(header => {
-  const section = header.getAttribute('data-section');
-  const content = header.nextElementSibling;
-  const icon = header.querySelector('.icon');
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.section-header').forEach(header => {
+    const content = header.nextElementSibling; // Блок с контентом (текст под заголовком)
+    const icon = header.querySelector('.icon'); // Иконка «+»/«×»
 
-  header.addEventListener('click', () => {
-    if (content.style.display === 'block') {
-      content.classList.remove('active');
-      icon.classList.remove('rotated');
-      content.style.display = 'none';
-      icon.textContent = '+';
-    } else {
-      content.style.display = 'block';
-      content.classList.add('active');
-      icon.classList.add('rotated');
-      icon.textContent = '×';
-    }
+    header.addEventListener('click', () => {
+      // Проверяем, открыт ли уже блок
+      if (content.style.display === 'block') {
+        // Закрываем блок: убираем класс active для плавного затухания
+        content.classList.remove('active');
+        icon.classList.remove('rotated');
+        icon.textContent = '+';
+
+        // Ждём завершения анимации (0.5 с) перед скрытием элемента
+        setTimeout(() => {
+          content.style.display = 'none';
+        }, 500); // 500 мс = длительность transition в CSS
+      } else {
+        // Открываем блок: показываем контент и запускаем анимацию
+        content.style.display = 'block';
+        content.classList.add('active');
+        icon.classList.add('rotated');
+        icon.textContent = '×';
+      }
+    });
   });
 });
