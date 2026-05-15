@@ -132,3 +132,114 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize', updateScrollProgress);
   updateScrollProgress();
 });
+// ==================== КАРУСЕЛЬ ТОВАРОВ + СВАЙП ====================
+document.addEventListener('DOMContentLoaded', () => {
+
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        const inner = carousel.querySelector('.carousel-inner');
+        const items = carousel.querySelectorAll('.carousel-item');
+        const prev = carousel.querySelector('.prev');
+        const next = carousel.querySelector('.next');
+        const dotsContainer = carousel.querySelector('.carousel-dots');
+
+        if (!inner || items.length === 0) return;
+
+        let currentIndex = 0;
+        const totalSlides = items.length;
+        let startX = 0;
+        let isDragging = false;
+
+        // Создаём точки
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    currentIndex = i;
+                    updateCarousel();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+        const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
+
+        function updateCarousel() {
+            inner.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+        }
+
+        // Кнопки
+        next?.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel();
+        });
+
+        prev?.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        });
+
+        // === СВАЙП ПАЛЬЦЕМ ===
+        inner.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+
+        inner.addEventListener('touchmove', e => {
+            if (!isDragging) return;
+        });
+
+        inner.addEventListener('touchend', e => {
+            if (!isDragging) return;
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+
+            if (diff > 50) { // свайп влево
+                currentIndex = (currentIndex + 1) % totalSlides;
+            } else if (diff < -50) { // свайп вправо
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            }
+            
+            updateCarousel();
+            isDragging = false;
+        });
+
+        // Автолистание
+        let autoInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel();
+        }, 5000);
+
+        carousel.addEventListener('mouseenter', () => clearInterval(autoInterval));
+        carousel.addEventListener('mouseleave', () => {
+            autoInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateCarousel();
+            }, 5000);
+        });
+
+        // Инициализация
+        updateCarousel();
+    });
+});
+document.querySelectorAll('.section-header').forEach(header => {
+  const section = header.getAttribute('data-section');
+  const content = header.nextElementSibling;
+  const icon = header.querySelector('.icon');
+
+  header.addEventListener('click', () => {
+    if (content.style.display === 'block') {
+      content.classList.remove('active');
+      icon.classList.remove('rotated');
+      content.style.display = 'none';
+      icon.textContent = '+';
+    } else {
+      content.style.display = 'block';
+      content.classList.add('active');
+      icon.classList.add('rotated');
+      icon.textContent = '×';
+    }
+  });
+});
