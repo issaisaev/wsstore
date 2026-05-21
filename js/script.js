@@ -251,3 +251,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+// ==================== HERO VIDEO ====================
+
+document.addEventListener('DOMContentLoaded', () => {
+  const heroVideo = document.querySelector('.hero-video');
+
+  if (heroVideo) {
+
+    // Форсируем autoplay на мобильных
+    heroVideo.play().catch(() => {});
+
+    // Если видео зависло — перезапуск
+    heroVideo.addEventListener('ended', () => {
+      heroVideo.play();
+    });
+
+  }
+});
+// ==================== HERO PARALLAX ====================
+
+window.addEventListener('scroll', () => {
+
+  const hero = document.querySelector('.hero-section');
+  const video = document.querySelector('.hero-video');
+  const content = document.querySelector('.hero-content');
+
+  if (!hero || !video || !content) return;
+
+  const scrollY = window.scrollY;
+
+  video.style.transform =
+    `scale(1.08) translateY(${scrollY * 0.15}px)`;
+
+  content.style.transform =
+    `translateY(${scrollY * 0.25}px)`;
+
+});
