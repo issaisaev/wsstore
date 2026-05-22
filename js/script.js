@@ -303,3 +303,40 @@ if (burgerBtn && mobileMenu) {
   });
 
 }
+// ==================== HEADER SCROLL HIDE ====================
+
+const header = document.querySelector('.header'); // поправь под себя
+
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+  const current = window.scrollY;
+
+  if (current > window.innerHeight) {
+    header.classList.add('hide');
+    return;
+  }
+
+  if (current > lastScroll) {
+    header.classList.add('hide');
+  } else {
+    header.classList.remove('hide');
+  }
+
+  lastScroll = current;
+});
+// ПЛАВНЫЙ ПЕРЕХОД НА КАТАЛОГ
+const overlay = document.querySelector('.page-overlay');
+const catalogBtn = document.querySelector('.btn-catalog');
+
+if (catalogBtn && overlay) {
+  catalogBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    overlay.classList.add('active');
+
+    setTimeout(() => {
+      window.location.href = this.href;
+    }, 600);
+  });
+}
