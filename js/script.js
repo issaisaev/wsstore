@@ -305,25 +305,36 @@ if (burgerBtn && mobileMenu) {
 }
 // ==================== HEADER SCROLL HIDE ====================
 
-const header = document.querySelector('.header'); // поправь под себя
+const header = document.querySelector('.header');
 
 let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
-  const current = window.scrollY;
 
-  if (current > window.innerHeight) {
-    header.classList.add('hide');
-    return;
-  }
+    const current = window.scrollY;
 
-  if (current > lastScroll) {
-    header.classList.add('hide');
-  } else {
-    header.classList.remove('hide');
-  }
+    /* всегда показываем header наверху страницы */
+    if (current <= 10) {
 
-  lastScroll = current;
+        header.classList.remove('hide');
+
+        lastScroll = current;
+
+        return;
+    }
+
+    /* скролл вниз */
+    if (current > lastScroll) {
+
+        header.classList.add('hide');
+
+    } else {
+
+        /* скролл вверх */
+        header.classList.remove('hide');
+    }
+
+    lastScroll = current;
 });
 // ПЛАВНЫЙ ПЕРЕХОД НА КАТАЛОГ
 const overlay = document.querySelector('.page-overlay');

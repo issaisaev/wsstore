@@ -1586,8 +1586,16 @@ header {
   top: 0;
   left: 0;
   width: 100%;
+
   z-index: 1000;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
+
+  will-change: transform;
+
+  transform: translateY(0);
 }
 
 header.hide {
