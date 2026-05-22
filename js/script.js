@@ -287,3 +287,19 @@ window.addEventListener('scroll', () => {
     `translateY(${scrollY * 0.25}px)`;
 
 });
+// ==================== MOBILE MENU ====================
+
+const burgerBtn = document.querySelector('.burger-btn');
+const mobileMenu = document.querySelector('.mobile-menu');
+
+if (burgerBtn && mobileMenu) {
+
+  burgerBtn.addEventListener('click', () => {
+
+    burgerBtn.classList.toggle('active');
+
+    mobileMenu.classList.toggle('active');
+
+  });
+
+}

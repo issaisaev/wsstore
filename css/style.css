@@ -81,7 +81,7 @@ padding: 0;
 }
 
 .logo img {
-height: 80px; /* Оптимальная высота логотипа */
+height: 58px;
 width: auto;
 border-radius: 4px;
 display: block;
@@ -100,7 +100,7 @@ text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 overflow: hidden;
 background: #1a1a1a;
 padding: 0;
-margin-top: 80px;
+margin-top: 58px;
 border-top: 1px solid #333;
 border-bottom: 1px solid #333;
 width: 100%;
@@ -590,42 +590,11 @@ font-size: 1.8rem;
 }
 
 .marquee-container {
-margin-top: 80px; /* Корректируем отступ под уменьшенную шапку */
+margin-top: 58px; /* Корректируем отступ под уменьшенную шапку */
 }
 }
 
-@media (max-width: 768px) {
-.nav-container {
-flex-direction: column;
-gap: 1rem;
-text-align: center;
-}
 
-.logo {
-gap: 10px;
-}
-
-.logo img {
-height: 50px; /* Компактный размер для планшетов */
-}
-
-.logo .brand-name {
-font-size: 1.6rem;
-}
-
-.marquee-container {
-margin-top: 90px; /* Адаптивный отступ для планшетов */
-padding: 0;
-}
-
-.section-title {
-font-size: 2rem;
-}
-
-.products {
-grid-template-columns: 1fr; /* Одна колонка на планшетах */
-}
-}
 
 @media (max-width: 480px) {
 header {
@@ -645,7 +614,7 @@ font-size: 1.4rem;
 }
 
 .marquee-container {
-margin-top: 70px; /* Минимальный отступ для мобильных */
+margin-top: 46px; /* Минимальный отступ для мобильных */
 padding: 0px;
 }
 
@@ -675,7 +644,103 @@ padding: 12px 24px;
 font-size: 0.9rem;
 }
 }
+/* ==================== MARQUEE ADAPTIVE ==================== */
 
+/* Ноутбуки */
+@media (max-width: 1200px) {
+
+    .marquee-container {
+        margin-top: 58px;
+    }
+
+    .marquee-content {
+        gap: 18px;
+    }
+
+    .marquee-content span {
+        font-size: 1rem;
+    }
+
+    .marquee-logo {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+/* Планшеты */
+@media (max-width: 992px) {
+
+    .marquee-container {
+        margin-top: 58px;
+    }
+
+    .marquee-content {
+        gap: 16px;
+    }
+
+    .marquee-content span {
+        font-size: 0.9rem;
+
+        letter-spacing: 0.5px;
+    }
+
+    .marquee-logo {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Большие телефоны */
+@media (max-width: 768px) {
+
+    .marquee-container {
+        margin-top: 58px;
+    }
+
+    .marquee-content {
+        gap: 14px;
+    }
+
+    .marquee-content span {
+        font-size: 0.78rem;
+
+        letter-spacing: 0.4px;
+    }
+
+    .marquee-logo {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .marquee-container {
+
+        margin-top: 46px;
+
+        padding: 4px 0;
+    }
+
+    .marquee-content {
+
+        gap: 16px;
+    }
+
+    .marquee-content span {
+
+        font-size: 0.82rem;
+
+        letter-spacing: 0.5px;
+    }
+
+    .marquee-logo {
+
+        width: 24px;
+
+        height: 24px;
+    }
+}
 /* === СТИЛИ ПРЕЛОАДЕРА (ИСПРАВЛЕННЫЕ) === */
 
 #preloader {
@@ -883,7 +948,7 @@ height: 9px;
 
     padding: 5px 10px;
 
-    margin-bottom: 14px;
+    margin-bottom: 2px;
 
     background: rgba(255, 255, 255, 0.283);
 
@@ -1052,7 +1117,7 @@ height: 9px;
 
     padding: 8px 14px;
 
-    margin-bottom: 18px;
+    margin-bottom: 1px !important;
     }
     .hero-content h1 {
 
@@ -1060,7 +1125,7 @@ height: 9px;
 
         line-height: 1.3;
 
-        margin-bottom: 26px;
+        margin-bottom: 10px;
 
         max-width: 95%;
 
@@ -1179,4 +1244,325 @@ height: 9px;
 
     z-index: 2;
     pointer-events: none;
+}
+/* ==================== HEADER ==================== */
+
+.header {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    height: 58px;
+
+    z-index: 9999;
+
+    padding: 0 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: rgba(0,0,0,0.82);
+
+    backdrop-filter: blur(10px);
+}
+
+/* ==================== NAV ==================== */
+
+.header .nav-container {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+}
+
+/* ==================== LOGO ==================== */
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    margin: 0;
+
+    padding: 0;
+
+    z-index: 10001;
+}
+
+.logo img {
+
+    height: 46px;
+
+    width: auto;
+
+    display: block;
+}
+
+/* ==================== DESKTOP SOCIALS ==================== */
+
+.desktop-socials {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+}
+
+.social-icon {
+
+    color: #fff;
+
+    font-size: 1rem;
+
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.social-icon:hover {
+
+    transform: translateY(-3px);
+
+    opacity: 0.7;
+}
+
+/* ==================== BURGER ==================== */
+
+.burger-btn {
+
+    width: 40px;
+
+    height: 40px;
+
+    border: none;
+
+    background: transparent;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    cursor: pointer;
+
+    z-index: 100001;
+}
+
+.burger-btn span {
+
+    position: absolute;
+
+    width: 22px;
+
+    height: 1.5px;
+
+    background: #fff;
+
+    transition: 0.35s ease;
+}
+
+.burger-btn span:nth-child(1) {
+
+    transform: translateY(-4px);
+}
+
+.burger-btn span:nth-child(2) {
+
+    transform: translateY(4px);
+}
+
+/* ACTIVE */
+
+.burger-btn.active span:nth-child(1) {
+
+    transform: rotate(45deg);
+}
+
+.burger-btn.active span:nth-child(2) {
+
+    transform: rotate(-45deg);
+}
+
+/* ==================== MOBILE MENU ==================== */
+
+.mobile-menu {
+
+    position: fixed;
+
+    top: 58px;
+
+    left: 0;
+
+    width: 100%;
+
+    padding: 28px 22px;
+
+    background: rgba(0,0,0,0.94);
+
+    backdrop-filter: blur(18px);
+
+    z-index: 99998;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 24px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(-12px);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease,
+        visibility 0.35s ease;
+}
+
+.mobile-menu.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+/* ==================== MOBILE LINKS ==================== */
+
+.mobile-social {
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-family: 'Benzin', Arial, sans-serif;
+
+    font-size: 0.9rem;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.mobile-social:hover {
+
+    opacity: 0.7;
+
+    transform: translateX(4px);
+}
+
+/* ==================== TABLET ==================== */
+
+@media (max-width: 992px) {
+
+    .header {
+
+        height: 52px;
+
+        top: 0;
+    }
+
+    .logo img {
+
+        height: 42px;
+    }
+
+    .mobile-menu {
+
+        top: 52px;
+    }
+
+    .marquee-container {
+
+        margin-top: 52px;
+    }
+}
+
+/* ==================== MOBILE ==================== */
+
+@media (max-width: 768px) {
+
+    .header {
+
+        top: 0;
+
+        height: 46px;
+
+        padding: 0 16px;
+    }
+
+    .header .nav-container {
+
+        display: flex;
+
+        flex-direction: row !important;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        width: 100%;
+
+        padding: 0;
+    }
+
+    .logo img {
+
+        height: 36px;
+    }
+
+    .desktop-socials {
+
+        display: none !important;
+    }
+
+    .burger-btn {
+
+        display: flex !important;
+
+        margin-left: auto;
+    }
+
+    .mobile-menu {
+
+        top: 46px;
+
+        padding: 24px 20px;
+    }
+
+    .marquee-container {
+
+        margin-top: 46px;
+    }
 }
