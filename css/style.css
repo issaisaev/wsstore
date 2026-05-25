@@ -39,6 +39,14 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
+
+  background: #000;
+  overscroll-behavior-y: none;
+}
+
+body {
   font-family: 'Benzin', Arial, sans-serif;
 
   background: linear-gradient(270deg, #000000, #05070d, #000000);
@@ -47,9 +55,9 @@ body {
 
   color: #fff;
   line-height: 1.6;
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+
+  min-height: 100vh;
 }
 @keyframes subtleGradient {
   0% {
