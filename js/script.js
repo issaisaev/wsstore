@@ -1,353 +1,520 @@
+// ==================== PRELOADER ====================
+
 // Создаём прелоадер динамически
 const preloader = document.createElement('div');
+
 preloader.id = 'preloader';
+
 preloader.innerHTML = `
   <div class="preloader-content">
+
     <div class="logo-container">
-      <img src="images/mount.png" alt="Логотип сайта" class="preloader-logo">
+      <img
+        src="images/mount.png"
+        alt="Логотип сайта"
+        class="preloader-logo"
+      >
     </div>
+
     <div class="progress-container">
+
       <div class="progress-bar">
         <div class="progress-fill"></div>
       </div>
+
       <div class="progress-text">0%</div>
+
     </div>
+
   </div>
 `;
+
 document.body.appendChild(preloader);
 
+
+// Элементы прелоадера
 const progressFill = preloader.querySelector('.progress-fill');
 const progressText = preloader.querySelector('.progress-text');
 
+
+// Переменные
 let isPreloaderHidden = false;
 let progress = 0;
 let interval;
 
-// Функция обновления прогресса прелоадера
+
+// ==================== ПРОГРЕСС ПРЕЛОАДЕРА ====================
+
 function updateProgress() {
+
   progress += Math.random() * 3 + 1;
+
   if (progress >= 100) {
+
     progress = 100;
+
     clearInterval(interval);
+
     hidePreloader();
+
   }
-  if (progressFill) progressFill.style.width = `${progress}%`;
-  if (progressText) progressText.textContent = `${Math.floor(progress)}%`;
+
+  if (progressFill) {
+    progressFill.style.width = `${progress}%`;
+  }
+
+  if (progressText) {
+    progressText.textContent = `${Math.floor(progress)}%`;
+  }
+
 }
 
-// Функция скрытия прелоадера
+
+// ==================== СКРЫТИЕ ПРЕЛОАДЕРА ====================
+
 function hidePreloader() {
+
   if (isPreloaderHidden) return;
+
   isPreloaderHidden = true;
+
   setTimeout(() => {
-    if (preloader) {
-      preloader.classList.add('loaded');
-      setTimeout(() => {
-        if (preloader && preloader.parentNode) {
-          preloader.remove();
-        }
-      }, 500);
-    }
+
+    if (!preloader) return;
+
+    preloader.classList.add('loaded');
+
+    setTimeout(() => {
+
+      if (preloader && preloader.parentNode) {
+        preloader.remove();
+      }
+
+    }, 500);
+
   }, 500);
+
 }
 
-// Запускаем анимацию прогресса
+
+// Запускаем прогресс
 interval = setInterval(updateProgress, 150);
+
 
 // Принудительное скрытие через 15 секунд
 setTimeout(() => {
-  if (preloader && !preloader.classList.contains('loaded')) {
+
+  if (
+    preloader &&
+    !preloader.classList.contains('loaded')
+  ) {
+
     clearInterval(interval);
+
     progress = 100;
-    if (progressFill) progressFill.style.width = '100%';
-    if (progressText) progressText.textContent = '100%';
+
+    if (progressFill) {
+      progressFill.style.width = '100%';
+    }
+
+    if (progressText) {
+      progressText.textContent = '100%';
+    }
+
     hidePreloader();
+
   }
+
 }, 15000);
 
-// Скрытие после полной загрузки
+
+// Скрытие после полной загрузки страницы
 window.addEventListener('load', () => {
+
   setTimeout(() => {
+
     clearInterval(interval);
+
+    if (progressFill) {
+      progressFill.style.width = '100%';
+    }
+
+    if (progressText) {
+      progressText.textContent = '100%';
+    }
+
     hidePreloader();
+
   }, 500);
+
 });
 
-// ====================== ОСНОВНОЙ КОД САЙТА ======================
-document.addEventListener('DOMContentLoaded', function() {
 
-  // Анимация карточек
-  const productCards = document.querySelectorAll('.product-card');
+// ==================== ОСНОВНОЙ КОД САЙТА ====================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+
+  // ==================== АНИМАЦИЯ КАРТОЧЕК ====================
+
+  const productCards =
+    document.querySelectorAll('.product-card');
+
   let cardObserver;
+
   if (productCards.length > 0) {
-    cardObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+
+    cardObserver = new IntersectionObserver(
+      (entries) => {
+
+        entries.forEach(entry => {
+
+          if (entry.isIntersecting) {
+
+            entry.target.classList.add('visible');
+
+          }
+
+        });
+
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+
+    productCards.forEach(card => {
+
+      cardObserver.observe(card);
+
+    });
+
+  }
+
+
+  // ==================== ПЛАВНЫЙ СКРОЛЛ ====================
+
+  document
+    .querySelectorAll('a[href^="#"]')
+    .forEach(anchor => {
+
+      anchor.addEventListener('click', function (e) {
+
+        const targetId =
+          this.getAttribute('href');
+
+        // Если это просто "#"
+        if (
+          targetId === '#' ||
+          !targetId.startsWith('#')
+        ) {
+          return;
         }
+
+        const target =
+          document.querySelector(targetId);
+
+        if (target) {
+
+          e.preventDefault();
+
+          const header =
+            document.querySelector('.header');
+
+          const headerHeight =
+            header ? header.offsetHeight : 0;
+
+          window.scrollTo({
+
+            top:
+              target.offsetTop -
+              headerHeight -
+              20,
+
+            behavior: 'smooth'
+
+          });
+
+        }
+
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    
-    productCards.forEach(card => cardObserver.observe(card));
-  }
 
-  // Плавный скролл
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href');
-      if (targetId === '#' || !targetId.startsWith('#')) return;
-      const target = document.querySelector(targetId);
-      if (target) {
-        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-      }
     });
-  });
 
-  // Пульсация кнопки
-  const firstBuyButton = document.querySelector('.btn-buy');
+
+  // ==================== ПУЛЬСАЦИЯ КНОПКИ ====================
+
+  const firstBuyButton =
+    document.querySelector('.btn-buy');
+
   if (firstBuyButton) {
-    setTimeout(() => firstBuyButton.style.animation = 'pulse 2s infinite', 2000);
+
+    setTimeout(() => {
+
+      firstBuyButton.style.animation =
+        'pulse 2s infinite';
+
+    }, 2000);
+
   }
 
-  // Кнопки "Купить"
-  document.querySelectorAll('.btn-buy').forEach(button => {
-    button.addEventListener('click', function() {
-      const name = this.closest('.product-card')?.querySelector('h3')?.textContent;
-      console.log('Купить:', name);
-    });
-  });
 
-  // Прогресс-бар скролла
+  // ==================== КНОПКИ "КУПИТЬ" ====================
+
+  document
+    .querySelectorAll('.btn-buy')
+    .forEach(button => {
+
+      button.addEventListener('click', function () {
+
+        const productCard =
+          this.closest('.product-card');
+
+        const productName =
+          productCard
+            ?.querySelector('h3')
+            ?.textContent
+            ?.trim();
+
+        console.log(
+          'Купить:',
+          productName || 'Товар'
+        );
+
+      });
+
+    });
+
+
+  // ==================== ПРОГРЕСС СКРОЛЛА ====================
+
   function updateScrollProgress() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    let scrollProgress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    
-    const bar = document.querySelector('.scroll-progress .progress-bar');
-    if (bar) bar.style.width = `${Math.min(Math.max(scrollProgress, 0), 100)}%`;
+
+    const scrollTop =
+      window.pageYOffset ||
+      document.documentElement.scrollTop;
+
+    const docHeight =
+      document.documentElement.scrollHeight -
+      window.innerHeight;
+
+    let scrollProgress = 0;
+
+    if (docHeight > 0) {
+
+      scrollProgress =
+        (scrollTop / docHeight) * 100;
+
+    }
+
+    const bar =
+      document.querySelector(
+        '.scroll-progress .progress-bar'
+      );
+
+    if (bar) {
+
+      bar.style.width =
+        `${Math.min(
+          Math.max(scrollProgress, 0),
+          100
+        )}%`;
+
+    }
+
   }
 
-  window.addEventListener('scroll', updateScrollProgress);
-  window.addEventListener('resize', updateScrollProgress);
+
+  window.addEventListener(
+    'scroll',
+    updateScrollProgress,
+    { passive: true }
+  );
+
+  window.addEventListener(
+    'resize',
+    updateScrollProgress
+  );
+
   updateScrollProgress();
+
+
 });
-// ==================== КАРУСЕЛЬ ТОВАРОВ + СВАЙП ====================
-document.addEventListener('DOMContentLoaded', () => {
 
-    document.querySelectorAll('.carousel').forEach(carousel => {
-        const inner = carousel.querySelector('.carousel-inner');
-        const items = carousel.querySelectorAll('.carousel-item');
-        const prev = carousel.querySelector('.prev');
-        const next = carousel.querySelector('.next');
-        const dotsContainer = carousel.querySelector('.carousel-dots');
 
-        if (!inner || items.length === 0) return;
+// ==================== СОСТАВ / ОПИСАНИЕ ====================
 
-        let currentIndex = 0;
-        const totalSlides = items.length;
-        let startX = 0;
-        let isDragging = false;
+document.addEventListener(
+  'DOMContentLoaded',
+  () => {
 
-        // Создаём точки
-        if (dotsContainer) {
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < totalSlides; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    currentIndex = i;
-                    updateCarousel();
-                });
-                dotsContainer.appendChild(dot);
-            }
-        }
-        const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
+    document
+      .querySelectorAll('.section-header')
+      .forEach(header => {
 
-        function updateCarousel() {
-            inner.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+        const content =
+          header.nextElementSibling;
+
+        const icon =
+          header.querySelector('.icon');
+
+
+        // Проверяем наличие элементов
+        if (!content || !icon) {
+          return;
         }
 
-        // Кнопки
-        next?.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            updateCarousel();
-        });
 
-        prev?.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            updateCarousel();
-        });
+        header.addEventListener(
+          'click',
+          () => {
 
-        // === СВАЙП ПАЛЬЦЕМ ===
-        inner.addEventListener('touchstart', e => {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-        });
 
-        inner.addEventListener('touchmove', e => {
-            if (!isDragging) return;
-        });
+            // ==================== ЗАКРЫТИЕ ====================
 
-        inner.addEventListener('touchend', e => {
-            if (!isDragging) return;
-            const endX = e.changedTouches[0].clientX;
-            const diff = startX - endX;
+            if (content.style.display === 'block') {
 
-            if (diff > 50) { // свайп влево
-                currentIndex = (currentIndex + 1) % totalSlides;
-            } else if (diff < -50) { // свайп вправо
-                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+              content.classList.remove('active');
+
+              icon.classList.remove('rotated');
+
+              icon.textContent = '+';
+
+
+              setTimeout(() => {
+
+                content.style.display = 'none';
+
+              }, 500);
+
+
             }
-            
-            updateCarousel();
-            isDragging = false;
-        });
 
-        // Автолистание
-        let autoInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            updateCarousel();
-        }, 5000);
+            // ==================== ОТКРЫТИЕ ====================
 
-        carousel.addEventListener('mouseenter', () => clearInterval(autoInterval));
-        carousel.addEventListener('mouseleave', () => {
-            autoInterval = setInterval(() => {
-                currentIndex = (currentIndex + 1) % totalSlides;
-                updateCarousel();
-            }, 5000);
-        });
+            else {
 
-        // Инициализация
-        updateCarousel();
-    });
-});
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.section-header').forEach(header => {
-    const content = header.nextElementSibling; // Блок с контентом (текст под заголовком)
-    const icon = header.querySelector('.icon'); // Иконка «+»/«×»
+              content.style.display = 'block';
 
-    header.addEventListener('click', () => {
-      // Проверяем, открыт ли уже блок
-      if (content.style.display === 'block') {
-        // Закрываем блок: убираем класс active для плавного затухания
-        content.classList.remove('active');
-        icon.classList.remove('rotated');
-        icon.textContent = '+';
+              // Небольшая задержка нужна,
+              // чтобы CSS-анимация успела запуститься
+              requestAnimationFrame(() => {
 
-        // Ждём завершения анимации (0.5 с) перед скрытием элемента
-        setTimeout(() => {
-          content.style.display = 'none';
-        }, 500); // 500 мс = длительность transition в CSS
-      } else {
-        // Открываем блок: показываем контент и запускаем анимацию
-        content.style.display = 'block';
-        content.classList.add('active');
-        icon.classList.add('rotated');
-        icon.textContent = '×';
-      }
-    });
-  });
-});
-// ==================== HERO VIDEO ====================
+                content.classList.add('active');
 
-document.addEventListener('DOMContentLoaded', () => {
-  const heroVideo = document.querySelector('.hero-video');
+              });
 
-  if (heroVideo) {
+              icon.classList.add('rotated');
 
-    // Форсируем autoplay на мобильных
-    heroVideo.play().catch(() => {});
+              icon.textContent = '×';
 
-    // Если видео зависло — перезапуск
-    heroVideo.addEventListener('ended', () => {
-      heroVideo.play();
-    });
+            }
+
+          }
+        );
+
+      });
 
   }
-});
-// ==================== HERO PARALLAX ====================
+);
 
-window.addEventListener('scroll', () => {
 
-  const hero = document.querySelector('.hero-section');
-  const video = document.querySelector('.hero-video');
-  const content = document.querySelector('.hero-content');
-
-  if (!hero || !video || !content) return;
-
-  const scrollY = window.scrollY;
-
-  video.style.transform =
-    `scale(1.08) translateY(${scrollY * 0.15}px)`;
-
-  content.style.transform =
-    `translateY(${scrollY * 0.25}px)`;
-
-});
 // ==================== MOBILE MENU ====================
 
-const burgerBtn = document.querySelector('.burger-btn');
-const mobileMenu = document.querySelector('.mobile-menu');
+const burgerBtn =
+  document.querySelector('.burger-btn');
+
+const mobileMenu =
+  document.querySelector('.mobile-menu');
+
 
 if (burgerBtn && mobileMenu) {
 
-  burgerBtn.addEventListener('click', () => {
 
-    burgerBtn.classList.toggle('active');
+  // Открытие / закрытие меню
+  burgerBtn.addEventListener(
+    'click',
+    () => {
 
-    mobileMenu.classList.toggle('active');
+      burgerBtn.classList.toggle('active');
 
-  });
+      mobileMenu.classList.toggle('active');
+
+    }
+  );
+
+
+  // Закрытие меню при нажатии
+  // на ссылку внутри меню
+  mobileMenu
+    .querySelectorAll('a')
+    .forEach(link => {
+
+      link.addEventListener(
+        'click',
+        () => {
+
+          burgerBtn.classList.remove('active');
+
+          mobileMenu.classList.remove('active');
+
+        }
+      );
+
+    });
 
 }
-// ==================== HEADER SCROLL HIDE ====================
 
-const header = document.querySelector('.header');
 
-let lastScroll = 0;
+// ==================== HEADER HIDE ON SCROLL ====================
 
-window.addEventListener('scroll', () => {
+let lastScrollY = window.scrollY;
 
-    const current = window.scrollY;
+const header =
+  document.querySelector('.header');
 
-    /* всегда показываем header наверху страницы */
-    if (current <= 10) {
 
-        header.classList.remove('hide');
+window.addEventListener(
+  'scroll',
+  () => {
 
-        lastScroll = current;
+    if (!header) return;
 
-        return;
+    const currentScrollY =
+      window.scrollY;
+
+
+    // В самом верху всегда показываем header
+    if (currentScrollY <= 10) {
+
+      header.classList.remove('hide');
+
+      lastScrollY = currentScrollY;
+
+      return;
+
     }
 
-    /* скролл вниз */
-    if (current > lastScroll) {
 
-        header.classList.add('hide');
+    // Скролл вниз — скрываем
+    if (currentScrollY > lastScrollY) {
 
-    } else {
+      header.classList.add('hide');
 
-        /* скролл вверх */
-        header.classList.remove('hide');
     }
 
-    lastScroll = current;
-});
-// ПЛАВНЫЙ ПЕРЕХОД НА КАТАЛОГ
-const overlay = document.querySelector('.page-overlay');
-const catalogBtn = document.querySelector('.btn-catalog');
+    // Скролл вверх — показываем
+    else {
 
-if (catalogBtn && overlay) {
-  catalogBtn.addEventListener('click', function(e) {
-    e.preventDefault();
+      header.classList.remove('hide');
 
-    overlay.classList.add('active');
+    }
 
-    setTimeout(() => {
-      window.location.href = this.href;
-    }, 600);
-  });
-}
+
+    lastScrollY = currentScrollY;
+
+  },
+  { passive: true }
+);
