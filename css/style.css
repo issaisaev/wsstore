@@ -494,7 +494,21 @@ body {
     box-shadow:
         0 12px 24px rgba(255, 255, 255, 0.1);
 }
+/* ==================== ФОТО ТОВАРА ==================== */
 
+.product-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #111;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
 
 /* ==================== КОНТЕНТ КАРТОЧКИ ==================== */
 
