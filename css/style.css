@@ -1,321 +1,560 @@
 @font-face {
-  font-family: 'Benzin';
-  src: url('../fonts/Benzin-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Benzin';
+    src: url('../fonts/Benzin-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: 'Benzin';
-  src: url('../fonts/Benzin-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Benzin';
+    src: url('../fonts/Benzin-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: 'Benzin';
-  src: url('../fonts/Benzin-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Benzin';
+    src: url('../fonts/Benzin-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: 'Benzin';
-  src: url('../fonts/Benzin-Semibold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Benzin';
+    src: url('../fonts/Benzin-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: 'Benzin';
-  src: url('../fonts/Benzin-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Benzin';
+    src: url('../fonts/Benzin-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
 }
+
+
+/* ==================== ОСНОВА ==================== */
+
 html {
-  background-color: #000;
-  height: 100%;
+    background-color: #000;
+    height: 100%;
+    overscroll-behavior-y: none;
 }
+
 body {
-  font-family: 'Benzin', Arial, sans-serif;
+    font-family: 'Benzin', Arial, sans-serif;
 
-  background: linear-gradient(270deg, #000000, #05070d, #000000);
-  background-size: 400% 400%;
-  animation: subtleGradient 12s ease infinite;
+    background: linear-gradient(
+        270deg,
+        #000000,
+        #05070d,
+        #000000
+    );
 
-  color: #fff;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    background-size: 400% 400%;
+    animation: subtleGradient 12s ease infinite;
 
-  min-height: 100%;
+    color: #fff;
+    line-height: 1.6;
+
+    margin: 0;
+    padding: 0;
+
+    min-height: 100%;
+
+    box-sizing: border-box;
 }
+
 * {
-  -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
-  overscroll-behavior-y: none;
+    overscroll-behavior-y: none;
 }
+
+
 @keyframes subtleGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-/* Шапка сайта — основные параметры */
-header {
-background: rgba(0, 0, 0, 0.9);
-padding:0; /* Увеличенный отступ для большей высоты шапки */
-position: fixed;
-width: 100%;
-top: 0;
-z-index: 1000;
-box-sizing: border-box;
-border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая разделительная линия */
+
+/* ==================== HEADER ==================== */
+
+.header {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 58px;
+
+    z-index: 9999;
+
+    padding: 0 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(0, 0, 0, 0.82);
+
+    backdrop-filter: blur(10px);
+
+    transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
+
+    will-change: transform;
+    transform: translateY(0);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Контейнер навигации — центрирование и ширина */
-.nav-container {
-display: flex;
-justify-content: space-between;
-align-items: center;
-max-width: 1400px; /* Увеличена максимальная ширина */
-margin: 0 auto;
-padding: 0 40px; /* Увеличены горизонтальные отступы */
-box-sizing: border-box;
+.header.hide {
+    transform: translateY(-100%);
+    opacity: 0;
 }
 
-/* Стили для логотипа — ключевые параметры размера */
+
+/* ==================== NAV ==================== */
+
+.header .nav-container {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+}
+
+
+/* ==================== LOGO ==================== */
+
 .logo {
-display: flex;
-align-items: center;
-gap: 20px; /* Немного увеличено расстояние между логотипом и текстом */
-margin: 0;
-padding: 0;
+    display: flex;
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+
+    z-index: 10001;
 }
 
 .logo img {
-height: 58px;
-width: auto;
-border-radius: 4px;
-display: block;
+    height: 46px;
+    width: auto;
+
+    display: block;
 }
 
-.logo .brand-name {
-font-family: 'Benzin', Arial, sans-serif;
-font-size: 2.2rem; /* Увеличен размер текста бренда */
-font-weight: bold;
-color: #fff;
-text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+
+/* ==================== СОЦСЕТИ ==================== */
+
+.desktop-socials {
+    display: flex;
+    align-items: center;
+    gap: 18px;
 }
 
-/* Бегущая строка */
+.social-icon {
+    color: #fff;
+
+    font-size: 1rem;
+
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    opacity: 0.7;
+}
+
+
+/* ==================== BURGER ==================== */
+
+.burger-btn {
+    width: 40px;
+    height: 40px;
+
+    border: none;
+    background: transparent;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    cursor: pointer;
+
+    z-index: 100001;
+}
+
+.burger-btn span {
+    position: absolute;
+
+    width: 22px;
+    height: 1.5px;
+
+    background: #fff;
+
+    transition: 0.35s ease;
+}
+
+.burger-btn span:nth-child(1) {
+    transform: translateY(-4px);
+}
+
+.burger-btn span:nth-child(2) {
+    transform: translateY(4px);
+}
+
+.burger-btn.active span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.burger-btn.active span:nth-child(2) {
+    transform: rotate(-45deg);
+}
+
+
+/* ==================== MOBILE MENU ==================== */
+
+.mobile-menu {
+    position: fixed;
+
+    top: 58px;
+    left: 0;
+
+    width: 100%;
+
+    padding: 28px 22px;
+
+    background: rgba(0, 0, 0, 0.94);
+
+    backdrop-filter: blur(18px);
+
+    z-index: 99998;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 24px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-12px);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease,
+        visibility 0.35s ease;
+}
+
+.mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+/* ==================== MOBILE LINKS ==================== */
+
+.mobile-social {
+    color: #fff;
+
+    text-decoration: none;
+
+    font-family: 'Benzin', Arial, sans-serif;
+
+    font-size: 0.9rem;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.mobile-social:hover {
+    opacity: 0.7;
+    transform: translateX(4px);
+}
+
+
+/* ==================== MARQUEE ==================== */
+
 .marquee-container {
-overflow: hidden;
-background: #1a1a1a;
-padding: 0;
-margin-top: 58px;
-border-top: 1px solid #333;
-border-bottom: 1px solid #333;
-width: 100%;
-max-width: none;
-position: relative;
-z-index: 99;
-box-sizing: border-box;
+    overflow: hidden;
+
+    background: #1a1a1a;
+
+    padding: 0;
+
+    margin-top: 58px;
+
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+
+    width: 100%;
+    max-width: none;
+
+    position: relative;
+
+    z-index: 99;
+
+    box-sizing: border-box;
 }
 
 .marquee {
-display: flex;
-justify-content: start;
-align-items: center;
-white-space: nowrap;
-width: auto;
-min-height: auto;
+    display: flex;
+
+    justify-content: flex-start;
+    align-items: center;
+
+    white-space: nowrap;
+
+    width: auto;
+    min-height: auto;
 }
 
 .marquee-content {
-display: flex;
-align-items: center;
-gap: 24px; /* Оптимальный интервал между элементами */
-animation: marquee 35s linear infinite; /* Плавная длительность */
-will-change: transform; /* Оптимизация анимации */
--webkit-backface-visibility: hidden; /* Устранение мерцания в Safari */
-backface-visibility: hidden; /* Устранение мерцания */
-transform-style: preserve-3d; /* Улучшение рендеринга */
-transform: translateZ(0); /* Включение GPU‑ускорения */
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+    animation: marquee 35s linear infinite;
+
+    will-change: transform;
+
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    transform-style: preserve-3d;
+
+    transform: translateZ(0);
+
+    -webkit-animation: marquee 35s linear infinite;
 }
 
 .marquee-content span {
-font-family: 'Benzin', Arial, sans-serif;
-font-size: 1.2rem;
-font-weight: 500;
-color: #fff;
-text-transform: uppercase;
-letter-spacing: 1px;
-min-width: max-content;
-line-height: 1;
-flex-shrink: 0;
-padding: 0 4px;
+    font-family: 'Benzin', Arial, sans-serif;
+
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    color: #fff;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    min-width: max-content;
+
+    line-height: 1;
+
+    flex-shrink: 0;
+
+    padding: 0 4px;
 }
 
-/* Анимация бегущей строки (плавный бесконечный цикл) */
+.marquee-logo {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+    align-self: center;
+
+    display: block;
+
+    image-rendering: crisp-edges;
+
+    transform: translateZ(0);
+
+    backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
+}
+
+
 @keyframes marquee {
-0% {
-transform: translateX(0);
-}
-100% {
-transform: translateX(-50%); /* Сдвиг на ширину одного набора элементов */
-}
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
-/* Стили для логотипа в бегущей строке (оптимизация для плавности) */
-.marquee-logo {
-width: 40px;
-height: 40px;
-flex-shrink: 0;
-margin: 0;
-align-self: center;
-display: block; /* Устраняет артефакты отображения */
-image-rendering: crisp-edges; /* Сохраняет чёткость */
-transform: translateZ(0); /* Включает GPU‑ускорение */
-backface-visibility: hidden; /* Оптимизация рендеринга */
--webkit-backface-visibility: hidden; /* Для Safari */
-}
-
-/* Оптимизация для Retina‑экранов (если есть версия @2x) */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-.marquee-logo {
-/* Если есть логотип в 2× разрешении, укажите его здесь */
-/* background-image: url('images/IMG_3755@2x.PNG'); */
-/* background-size: 40px 40px; */
-}
-}
-
-/* Поддержка Safari — дублируем анимацию с префиксом */
 @-webkit-keyframes marquee {
-0% {
--webkit-transform: translateX(0);
-}
-100% {
--webkit-transform: translateX(-50%);
-}
+    0% {
+        -webkit-transform: translateX(0);
+    }
+
+    100% {
+        -webkit-transform: translateX(-50%);
+    }
 }
 
-.marquee-content {
--webkit-animation: marquee 35s linear infinite; /* Анимация для Safari */
-}
 
-/* Поддержка Retina‑экранов */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-.marquee-logo {
-background-image: url('images/IMG_3755@2x.PNG');
-background-size: 40px 40px;
-}
-}
-/* Секция товаров */
+/* ==================== ТОВАРЫ ==================== */
+
 .products-section {
-padding: 4rem 20px;
-max-width: 1200px;
-margin: 0 auto;
-margin-top: 2rem; /* Отступ от бегущей строки */
+    padding: 4rem 20px;
+
+    max-width: 1200px;
+
+    margin: 2rem auto 0;
 }
 
-.section-title {
-text-align: center;
-margin-bottom: 3rem;
-font-size: 2.5rem;
-color: #fff;
-}
+
+/* Самое главное:
+   товар теперь НЕ растягивается на весь экран */
 
 .products {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-gap: 2rem;
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;
 }
 
-/* Карточка товара */
+
+/* ==================== КАРТОЧКА ТОВАРА ==================== */
+
 .product-card {
-background: #1a1a1a;
-border-radius: 8px;
-overflow: hidden;
-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-opacity: 0;
-transform: translateY(20px);
+    width: 500px;
+    max-width: 100%;
+
+    background: #1a1a1a;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    transition:
+        all 0.4s cubic-bezier(
+            0.25,
+            0.46,
+            0.45,
+            0.94
+        );
+
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.2);
+
+    opacity: 0;
+
+    transform: translateY(20px);
 }
 
 .product-card.visible {
-opacity: 1;
-transform: translateY(0);
+    opacity: 1;
+
+    transform: translateY(0);
 }
 
 .product-card:hover {
-transform: translateY(-10px);
-box-shadow: 0 12px 24px rgba(255, 255, 255, 0.1);
+    transform: translateY(-10px);
+
+    box-shadow:
+        0 12px 24px rgba(255, 255, 255, 0.1);
 }
 
 
+/* ==================== КАРУСЕЛЬ ==================== */
 
-.card-content {
-padding: 1.5rem;
-}
-
-.card-content h3 {
-margin-bottom: 0.8rem;
-color: #ffffff;
-font-size: 1.4rem;
-font-weight: 700;
-}
-
-.card-content p {
-color: #aaa;
-margin-bottom: 1.5rem;
-font-size: 1rem;
-}
-
-/* ==================== КАРУСЕЛЬ ТОВАРОВ ==================== */
 .carousel {
     position: relative;
+
     overflow: hidden;
+
     border-radius: 12px;
+
     width: 100%;
-    padding-bottom: 100%;   /* 1:1 квадрат */
+
+    padding-bottom: 100%;
+
     height: 0;
+
     background: #111;
 }
 
 .carousel-inner {
     position: absolute;
-    top: 0; left: 0;
+
+    top: 0;
+    left: 0;
+
     width: 100%;
     height: 100%;
+
     display: flex;
+
     flex-wrap: nowrap;
+
     align-items: stretch;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    transition:
+        transform 0.5s cubic-bezier(
+            0.4,
+            0,
+            0.2,
+            1
+        );
+
     -webkit-overflow-scrolling: touch;
 }
 
 .carousel-item {
     width: 100%;
     min-width: 100%;
+
     height: 100%;
+
     flex-shrink: 0;
+
     position: relative;
+
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
 }
@@ -323,362 +562,524 @@ font-size: 1rem;
 .carousel-item img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     object-position: center;
+
     display: block;
 }
 
-/* Кнопки */
+
+/* ==================== КНОПКИ КАРУСЕЛИ ==================== */
+
 .carousel-btn {
-position: absolute;
-top: 50%;
-transform: translateY(-50%);
-background: rgba(0, 0, 0, 0.65);
-color: white;
-border: none;
-width: 48px;
-height: 48px;
-font-size: 28px;
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-z-index: 10;
-border-radius: 50%;
-transition: all 0.3s;
-user-select: none;
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    background: rgba(0, 0, 0, 0.65);
+
+    color: white;
+
+    border: none;
+
+    width: 48px;
+    height: 48px;
+
+    font-size: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    border-radius: 50%;
+
+    transition: all 0.3s;
+
+    user-select: none;
 }
 
 .carousel-btn:hover {
-background: rgba(0, 0, 0, 0.9);
-transform: translateY(-50%) scale(1.1);
+    background: rgba(0, 0, 0, 0.9);
+
+    transform:
+        translateY(-50%)
+        scale(1.1);
 }
 
-.carousel-btn.prev { left: 12px; }
-.carousel-btn.next { right: 12px; }
+.carousel-btn.prev {
+    left: 12px;
+}
 
-.delivery-note {
-  font-size: 0.7rem; /* Крайне маленький размер (≈8px при базовом 16px) */
-  color: #f5f5f5; /* Чуть темнее белого — почти незаметный */
-  margin-top: 1px; /* Минимальный отступ от цены */
-  line-height: 1; /* Убирает лишние отступы между строками */
-  margin-bottom: 5px; /* Лёгкий отступ до кнопки */
-  font-weight: normal; /* Не жирный — выглядит ещё меньше */
-  letter-spacing: -0.2px; /* Буквы чуть ближе — компактнее */
+.carousel-btn.next {
+    right: 12px;
 }
-@media (max-width: 768px) {
-  .delivery-note {
-    font-size: 0.5rem; /* Ещё мельче на мобильных */
-  }
-}
-/* ==================== ТОЧКИ-ИНДИКАТОРЫ ==================== */
+
+
+/* ==================== ТОЧКИ ==================== */
+
 .carousel-dots {
-position: absolute;
-bottom: 15px;
-left: 50%;
-transform: translateX(-50%);
-display: flex;
-gap: 8px;
-z-index: 11;
+    position: absolute;
+
+    bottom: 15px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 8px;
+
+    z-index: 11;
 }
 
 .carousel-dots .dot {
-width: 10px;
-height: 10px;
-background: rgba(255, 255, 255, 0.5);
-border-radius: 50%;
-cursor: pointer;
-transition: all 0.3s ease;
+    width: 10px;
+    height: 10px;
+
+    background: rgba(255, 255, 255, 0.5);
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
 }
 
 .carousel-dots .dot.active {
-background: #ffffff;
-transform: scale(1.4);
-}
+    background: #fff;
 
-/* Адаптив для точек на мобильных */
-@media (max-width: 480px) {
-.carousel-dots .dot {
-width: 9px;
-height: 9px;
-}
-}
-/* ==================== ЦЕНА И КНОПКА ==================== */
-.price-buy-container {
-display: flex;
-flex-direction: column; /* Вертикальное расположение элементов */
-align-items: flex-start; /* Выравнивание по левому краю */
-gap: 12px; /* Отступ между ценой и кнопкой */
-margin-top: 1.2rem;
-}
-
-.price-wrapper {
-width: 100%; /* Занимает всю ширину контейнера */
-}
-
-.price {
-font-size: 1.35rem;
-font-weight: 700;
-color: #ffffff;
-white-space: nowrap;
-}
-
-/* ==================== УЛУЧШЕННАЯ КНОПКА КУПИТЬ ==================== */
-.btn-buy {
-display: inline-block;
-padding: 14px 28px;
-background: transparent;
-color: #ffffff;
-border: 2px solid #ffffff;
-text-decoration: none;
-border-radius: 4px;
-transition: all 0.3s;
-font-weight: 600;
-text-transform: uppercase;
-letter-spacing: 1px;
-position: relative;
-overflow: hidden;
-}
-
-/* Постоянная переливающаяся анимация (блик) */
-.btn-buy::before {
-content: '';
-position: absolute;
-top: -50%;
-left: -100%;
-width: 40%;
-height: 300%;
-background: linear-gradient(
-120deg,
-transparent,
-rgba(255, 255, 255, 0.35),
-transparent
-);
-animation: shine 3.5s linear infinite;
-}
-
-@keyframes shine {
-0% { left: -100%; }
-15% { left: 120%; }
-100% { left: 120%; }
-}
-
-/* Старые анимации (полностью сохранены) */
-.btn-buy::after {
-content: '';
-position: absolute;
-top: 0;
-left: -100%;
-width: 100%;
-height: 100%;
-background: linear-gradient(90deg, transparent, rgba(47, 47, 52, 0.2), transparent);
-transition: left 0.5s;
-}
-
-.btn-buy:hover::after {
-left: 100%;
-}
-
-.btn-buy:hover {
-background: #fff;
-color: #160049;
-transform: scale(1.05);
+    transform: scale(1.4);
 }
 
 
-
-.expandable-section {
-margin-top: 10px;
-}
-
-.section-header {
-display: flex;
-align-items: center;
-cursor: pointer;
-padding: 5px 0;
-}
-
-.icon {
-width: 20px;
-height: 20px;
-font-size: 16px;
-line-height: 20px;
-text-align: center;
-transition: transform 0.3s ease;
-}
-
-.title {
-margin-left: 10px;
-font-weight: 500;
-}
-
-.section-content {
-padding-left: 30px;
-transition: max-height 0.5s ease-out, opacity 0.5s ease-out; /* Увеличили время и добавили кривую ease-out */
-opacity: 0;
-max-height: 0;
-overflow: hidden;
-padding-bottom: 10px;
-}
-
-.section-content.active {
-opacity: 1;
-max-height: 150px; /* Увеличили лимит высоты для комфортного раскрытия длинного текста */
-}
-
-.icon.rotated {
-transform: rotate(45deg);
-}
-
-
-/* Адаптив */
-@media (max-width: 480px) {
-.price-buy-container {
-flex-direction: column;
-align-items: flex-start;
-gap: 10px;
-}
-
-.price {
-font-size: 1.25rem;
-}
-
-.btn-buy {
-padding: 12px 24px;
-font-size: 0.95rem;
-}
-}
-
-/* Дополнительные адаптивные стили для очень маленьких экранов */
-@media (max-width: 360px) {
-.price-buy-container {
-gap: 8px;
-}
-
-.price {
-font-size: 1.15rem;
-}
-
-.btn-buy {
-padding: 10px 20px;
-font-size: 0.9rem;
-}
-}
-
-/* Прогресс‑бар скролла */
-.scroll-progress {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 4px;
-background: #1a1a1a;
-z-index: 10000; /* Всегда поверх всего */
-overflow: hidden;
-}
-
-.progress-bar {
-height: 100%;
-width: 0%;
-background: linear-gradient(90deg, #4CAF50, #8BC34A);
-transition: width 0.1s ease;
-}
-
-/* Адаптивные стили для шапки и всего контента */
-@media (max-width: 1200px) {
-.nav-container {
-max-width: 1100px;
-padding: 0;
-}
-
-.logo img {
-height: 70px; /* Уменьшаем логотип на средних экранах */
-}
-
-.logo .brand-name {
-font-size: 2rem;
-}
-}
-
-@media (max-width: 992px) {
-header {
-padding: 1.2rem 0; /* Уменьшаем высоту шапки на планшетах */
-}
-
-.nav-container {
-padding: 0 20px;
-}
-
-.logo img {
-height: 60px; /* Ещё меньше логотип */
-}
-
-.logo .brand-name {
-font-size: 1.8rem;
-}
-
-.marquee-container {
-margin-top: 58px; /* Корректируем отступ под уменьшенную шапку */
-}
-}
-
-
-
-@media (max-width: 480px) {
-header {
-padding: 1rem 0; /* Минимальная высота шапки на мобильных */
-}
-
-.nav-container {
-padding: 0 15px;
-}
-
-.logo img {
-height: 40px; /* Минимальный размер логотипа для смартфонов */
-}
-
-.logo .brand-name {
-font-size: 1.4rem;
-}
-
-.marquee-container {
-margin-top: 46px; /* Минимальный отступ для мобильных */
-padding: 0px;
-}
-
-.products-section {
-padding: 3rem 10px;
-}
-
-.section-title {
-font-size: 1.8rem;
-margin-bottom: 2rem;
-}
+/* ==================== КОНТЕНТ КАРТОЧКИ ==================== */
 
 .card-content {
-padding: 1rem;
+    padding: 1.5rem;
 }
 
 .card-content h3 {
-font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+
+    color: #fff;
+
+    font-size: 1.4rem;
+
+    font-weight: 700;
 }
 
 .card-content p {
-font-size: 0.9rem;
+    color: #aaa;
+
+    margin-bottom: 1.5rem;
+
+    font-size: 1rem;
 }
+
+
+/* ==================== РАСКРЫВАЮЩИЕСЯ СЕКЦИИ ==================== */
+
+.expandable-section {
+    margin-top: 10px;
+}
+
+.section-header {
+    display: flex;
+
+    align-items: center;
+
+    cursor: pointer;
+
+    padding: 5px 0;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+
+    font-size: 16px;
+
+    line-height: 20px;
+
+    text-align: center;
+
+    transition: transform 0.3s ease;
+}
+
+.title {
+    margin-left: 10px;
+
+    font-weight: 500;
+}
+
+.section-content {
+    padding-left: 30px;
+    padding-bottom: 10px;
+
+    transition:
+        max-height 0.5s ease-out,
+        opacity 0.5s ease-out;
+
+    opacity: 0;
+
+    max-height: 0;
+
+    overflow: hidden;
+}
+
+.section-content.active {
+    opacity: 1;
+
+    max-height: 150px;
+}
+
+.icon.rotated {
+    transform: rotate(45deg);
+}
+
+
+/* ==================== ЦЕНА И КНОПКА ==================== */
+
+.price-buy-container {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 1.2rem;
+}
+
+.price-wrapper {
+    width: 100%;
+}
+
+.price {
+    font-size: 1.35rem;
+
+    font-weight: 700;
+
+    color: #fff;
+
+    white-space: nowrap;
+}
+
+
+/* ==================== КНОПКА BUY ==================== */
 
 .btn-buy {
-padding: 12px 24px;
-font-size: 0.9rem;
-}
-}
-/* ==================== MARQUEE ADAPTIVE ==================== */
+    display: inline-block;
 
-/* Ноутбуки */
+    padding: 14px 28px;
+
+    background: transparent;
+
+    color: #fff;
+
+    border: 2px solid #fff;
+
+    text-decoration: none;
+
+    border-radius: 4px;
+
+    transition: all 0.3s;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.btn-buy::before {
+    content: '';
+
+    position: absolute;
+
+    top: -50%;
+    left: -100%;
+
+    width: 40%;
+    height: 300%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.35),
+        transparent
+    );
+
+    animation: shine 3.5s linear infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    15% {
+        left: 120%;
+    }
+
+    100% {
+        left: 120%;
+    }
+}
+
+.btn-buy::after {
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(47, 47, 52, 0.2),
+        transparent
+    );
+
+    transition: left 0.5s;
+}
+
+.btn-buy:hover::after {
+    left: 100%;
+}
+
+.btn-buy:hover {
+    background: #fff;
+
+    color: #160049;
+
+    transform: scale(1.05);
+}
+
+
+/* ==================== ДОСТАВКА ==================== */
+
+.delivery-note {
+    font-size: 0.7rem;
+
+    color: #f5f5f5;
+
+    margin-top: 1px;
+
+    line-height: 1;
+
+    margin-bottom: 5px;
+
+    font-weight: normal;
+
+    letter-spacing: -0.2px;
+}
+
+
+/* ==================== ПРОГРЕСС СКРОЛЛА ==================== */
+
+.scroll-progress {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: #1a1a1a;
+
+    z-index: 10000;
+
+    overflow: hidden;
+}
+
+.scroll-progress .progress-bar {
+    height: 100%;
+
+    width: 0%;
+
+    background: linear-gradient(
+        90deg,
+        #4CAF50,
+        #8BC34A
+    );
+
+    transition: width 0.1s ease;
+}
+
+
+/* ==================== PRELOADER ==================== */
+
+#preloader {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: #000;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+
+    transition: opacity 0.5s ease-out;
+}
+
+.preloader-content {
+    text-align: center;
+}
+
+.logo-container {
+    margin-bottom: 1px;
+}
+
+.preloader-logo {
+    max-width: 200px;
+    max-height: 150px;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+}
+
+.progress-container {
+    width: 80%;
+
+    max-width: 400px;
+
+    margin: 0 auto;
+}
+
+
+/* ВАЖНО:
+   теперь progress-bar прелоадера не конфликтует
+   со скролл-баром */
+
+.progress-container .progress-bar {
+    height: 6px;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-radius: 3px;
+
+    overflow: hidden;
+
+    margin-bottom: 15px;
+}
+
+.progress-fill {
+    height: 100%;
+
+    width: 0%;
+
+    background: linear-gradient(
+        90deg,
+        #ff6b6b,
+        #4ecdc4
+    );
+
+    transition: width 0.3s ease;
+
+    border-radius: 3px;
+
+    transform: translateX(0);
+}
+
+.progress-text {
+    color: #fff;
+
+    font-family: 'Benzin', Arial, sans-serif;
+
+    font-size: 1.2rem;
+
+    font-weight: 500;
+}
+
+#preloader.loaded {
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* ==================== PAGE OVERLAY ==================== */
+
+.page-overlay {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    backdrop-filter: blur(0);
+
+    background: rgba(0, 0, 0, 0);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: all 0.6s ease;
+
+    z-index: 9999;
+}
+
+.page-overlay.active {
+    backdrop-filter: blur(12px);
+
+    background: rgba(0, 0, 0, 0.4);
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   АДАПТИВ
+   ========================================================= */
+
+
+/* ==================== НОУТБУКИ ==================== */
+
 @media (max-width: 1200px) {
 
-    .marquee-container {
-        margin-top: 58px;
+    .header .nav-container {
+        max-width: 1100px;
+
+        padding: 0 20px;
+    }
+
+    .logo img {
+        height: 46px;
     }
 
     .marquee-content {
@@ -693,13 +1094,37 @@ font-size: 0.9rem;
         width: 34px;
         height: 34px;
     }
+
+    /* Товар чуть меньше */
+
+    .product-card {
+        width: 450px;
+    }
 }
 
-/* Планшеты */
+
+/* ==================== ПЛАНШЕТЫ ==================== */
+
 @media (max-width: 992px) {
 
+    .header {
+        height: 52px;
+    }
+
+    .header .nav-container {
+        padding: 0 20px;
+    }
+
+    .logo img {
+        height: 42px;
+    }
+
+    .mobile-menu {
+        top: 52px;
+    }
+
     .marquee-container {
-        margin-top: 58px;
+        margin-top: 52px;
     }
 
     .marquee-content {
@@ -716,13 +1141,58 @@ font-size: 0.9rem;
         width: 30px;
         height: 30px;
     }
+
+    /* Товар */
+
+    .product-card {
+        width: 420px;
+    }
 }
 
-/* Большие телефоны */
+
+/* ==================== БОЛЬШИЕ ТЕЛЕФОНЫ ==================== */
+
 @media (max-width: 768px) {
 
+    .header {
+        height: 46px;
+
+        padding: 0 16px;
+    }
+
+    .header .nav-container {
+        flex-direction: row !important;
+
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+
+        padding: 0;
+    }
+
+    .logo img {
+        height: 36px;
+    }
+
+    .desktop-socials {
+        display: none !important;
+    }
+
+    .burger-btn {
+        display: flex !important;
+
+        margin-left: auto;
+    }
+
+    .mobile-menu {
+        top: 46px;
+
+        padding: 24px 20px;
+    }
+
     .marquee-container {
-        margin-top: 58px;
+        margin-top: 46px;
     }
 
     .marquee-content {
@@ -739,901 +1209,207 @@ font-size: 0.9rem;
         width: 24px;
         height: 24px;
     }
+
+
+    /* ==================== ТОВАР НА МОБИЛЬНОМ ==================== */
+
+    .products-section {
+        padding: 3rem 15px;
+
+        margin-top: 1.5rem;
+    }
+
+    .product-card {
+        width: 360px;
+
+        max-width: calc(100vw - 30px);
+    }
+
+
+    .card-content {
+        padding: 1.2rem;
+    }
+
+    .card-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .card-content p {
+        font-size: 0.9rem;
+    }
+
+
+    .price {
+        font-size: 1.25rem;
+    }
+
+    .btn-buy {
+        padding: 12px 24px;
+
+        font-size: 0.9rem;
+    }
+
+    .delivery-note {
+        font-size: 0.5rem;
+    }
+
+
+    .progress-container {
+        width: 90%;
+    }
+
+    .progress-text {
+        font-size: 1rem;
+    }
+
+    .preloader-logo {
+        max-width: 160px;
+        max-height: 60px;
+    }
 }
+
+
+/* ==================== МАЛЕНЬКИЕ ТЕЛЕФОНЫ ==================== */
 
 @media (max-width: 480px) {
 
-    .marquee-container {
+    .header {
+        height: 46px;
 
+        padding: 0 15px;
+    }
+
+    .logo img {
+        height: 36px;
+    }
+
+    .marquee-container {
         margin-top: 46px;
 
         padding: 4px 0;
     }
 
     .marquee-content {
-
         gap: 16px;
     }
 
     .marquee-content span {
-
         font-size: 0.82rem;
 
         letter-spacing: 0.5px;
     }
 
     .marquee-logo {
-
         width: 24px;
-
         height: 24px;
     }
-}
-/* === СТИЛИ ПРЕЛОАДЕРА (ИСПРАВЛЕННЫЕ) === */
 
-#preloader {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: #000; /* Чёрный фон */
-display: flex;
-justify-content: center;
-align-items: center;
-z-index: 9999;
-transition: opacity 0.5s ease-out;
-}
 
-.preloader-content {
-text-align: center;
-}
+    /* ==================== ТОВАР ==================== */
 
-.logo-container {
-margin-bottom: 1px;
-}
-
-.preloader-logo {
-max-width: 200px; /* Максимальная ширина */
-max-height: 150px; /* Максимальная высота */
-width: auto; /* Автоширина для сохранения пропорций */
-height: auto; /* Автовысота для сохранения пропорций */
-object-fit: contain; /* Сохраняет пропорции изображения */
-border-radius: 8px; /* Скругление углов логотипа */
-}
-
-.progress-container {
-width: 80%;
-max-width: 400px;
-margin: 0 auto;
-}
-
-.progress-bar {
-height: 6px;
-background: rgba(255, 255, 255, 0.1);
-border-radius: 3px;
-overflow: hidden; /* КЛЮЧЕВОЕ: скрывает заполняющую часть за границами */
-margin-bottom: 15px;
-}
-
-.progress-fill {
-height: 100%;
-width: 0%; /* Начинаем с 0 % ширины */
-background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-transition: width 0.3s ease; /* Плавная анимация ширины */
-border-radius: 3px;
-transform: translateX(0); /* Дополнительная гарантия корректного отображения */
-}
-
-.progress-text {
-color: #fff;
-font-family: 'Benzin', Arial, sans-serif;
-font-size: 1.2rem;
-font-weight: 500;
-}
-
-/* Адаптивность прелоадера */
-@media (max-width: 768px) {
-.preloader-logo {
-max-width: 160px;
-max-height: 60px;
-}
-
-.progress-container {
-width: 90%;
-}
-
-.progress-text {
-font-size: 1rem;
-}
-}
-
-@media (max-width: 480px) {
-.preloader-logo {
-max-width: 120px;
-max-height: 40px;
-}
-
-.progress-text {
-font-size: 0.9rem;
-}
-}
-
-/* Анимация исчезновения прелоадера */
-#preloader.loaded {
-opacity: 0;
-pointer-events: none;
-}
-/* ==================== ТОЧКИ-ИНДИКАТОРЫ ==================== */
-.carousel-dots {
-position: absolute;
-bottom: 15px;
-left: 50%;
-transform: translateX(-50%);
-display: flex;
-gap: 8px;
-z-index: 11;
-}
-
-.carousel-dots .dot {
-width: 10px;
-height: 10px;
-background: rgba(255, 255, 255, 0.5);
-border-radius: 50%;
-cursor: pointer;
-transition: all 0.3s ease;
-}
-
-.carousel-dots .dot.active {
-background: #ffffff;
-transform: scale(1.4);
-}
-
-/* Адаптив для точек */
-@media (max-width: 480px) {
-.carousel-dots .dot {
-width: 9px;
-height: 9px;
-}
-}
-/* ==================== HERO SECTION ==================== */
-
-.hero-section {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #000;
-}
-
-.hero-video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-
-    /* плавность */
-    transform: scale(1.02);
-    filter: brightness(0.82);
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,0.12),
-            rgba(0,0,0,0.38)
-        );
-
-    z-index: 2;
-}
-
-.hero-content {
-
-    position: relative;
-
-    z-index: 3;
-
-    width: 100%;
-
-    padding: 0 30px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-}
-.hero-text-wrap {
-
-    width: fit-content;
-
-    max-width: 780px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-}
-/* ==================== HERO LABEL ==================== */
-
-.hero-label {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 5px 10px;
-
-    margin-bottom: 2px;
-
-    background: rgba(255, 255, 255, 0.283);
-
-    color: #000;
-
-    font-family: 'Benzin', Arial, sans-serif;
-
-    font-size: 0.64rem;
-
-    font-weight: 700;
-
-    letter-spacing: 1.8px;
-
-    text-transform: uppercase;
-
-    border-radius: 4px;
-
-    animation: heroFade 1.2s ease;
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,0.15);
-}
-.hero-content h1 {
-    font-family: 'Benzin', Arial, sans-serif;
-
-    font-size: clamp(1.4rem, 3.2vw, 3.2rem);
-
-    line-height: 1.2;
-
-    font-weight: 600;
-
-    color: #fff;
-
-    max-width: 780px;
-
-    margin-bottom: 36px;
-
-    letter-spacing: 0.5px;
-
-    text-shadow:
-        0 5px 20px rgba(0,0,0,0.45);
-
-    animation: heroFade 1.8s ease;
-
-    display: inline-block;
-
-    text-align: left;
-
-    width: 100%;
-}
-
-/* ==================== КНОПКА ==================== */
-
-.hero-btn {
-    position: relative;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 18px 42px;
-
-    border-radius: 999px;
-
-    text-decoration: none;
-
-    font-family: 'Benzin', Arial, sans-serif;
-
-    font-size: 0.95rem;
-
-    font-weight: 600;
-
-    letter-spacing: 1px;
-
-    color: #ffffff;
-
-    background: rgba(255,255,255,0.08);
-
-    border: 1px solid rgba(255,255,255,0.2);
-
-    backdrop-filter: blur(10px);
-
-    overflow: hidden;
-
-    transition:
-        transform 0.35s ease,
-        background 0.35s ease,
-        border-color 0.35s ease,
-        box-shadow 0.35s ease,
-        letter-spacing 0.35s ease;
-
-    animation: heroFade 2.2s ease;
-}
-
-/* стеклянный эффект */
-.hero-btn::before {
-    content: '';
-
-    position: absolute;
-
-    top: 0;
-    left: -120%;
-
-    width: 80%;
-    height: 100%;
-
-    background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.4),
-        transparent
-    );
-
-    transition: left 0.8s ease;
-}
-
-.hero-btn:hover::before {
-    left: 140%;
-}
-
-.hero-btn:hover {
-
-    transform:
-        translateY(-4px)
-        scale(1.04);
-
-    background: rgba(255,255,255,0.18);
-
-    border-color: rgba(255,255,255,0.6);
-
-    box-shadow:
-        0 10px 40px rgba(255,255,255,0.16);
-
-    letter-spacing: 1.5px;
-}
-
-/* ==================== АНИМАЦИИ ==================== */
-
-@keyframes heroFade {
-
-    from {
-        opacity: 0;
-        transform: translateY(30px);
+    .products-section {
+        padding: 3rem 10px;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .product-card {
+        width: 330px;
+
+        max-width: calc(100vw - 20px);
+    }
+
+
+    .card-content {
+        padding: 1rem;
+    }
+
+    .card-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .card-content p {
+        font-size: 0.9rem;
+    }
+
+
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+
+        font-size: 22px;
+    }
+
+    .carousel-btn.prev {
+        left: 8px;
+    }
+
+    .carousel-btn.next {
+        right: 8px;
+    }
+
+
+    .carousel-dots {
+        bottom: 10px;
+
+        gap: 7px;
+    }
+
+    .carousel-dots .dot {
+        width: 9px;
+        height: 9px;
+    }
+
+
+    .price-buy-container {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+    .price {
+        font-size: 1.25rem;
+    }
+
+    .btn-buy {
+        padding: 12px 24px;
+
+        font-size: 0.9rem;
+    }
+
+
+    .preloader-logo {
+        max-width: 120px;
+        max-height: 40px;
+    }
+
+    .progress-text {
+        font-size: 0.9rem;
     }
 }
 
-/* ==================== MOBILE ==================== */
 
-@media (max-width: 768px) {
+/* ==================== ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ ==================== */
 
-    .hero-section {
-        height: 100svh;
+@media (max-width: 360px) {
+
+    .product-card {
+        width: 310px;
+
+        max-width: calc(100vw - 20px);
     }
 
-    .hero-content {
-        padding: 0 22px;
-    }
-    .hero-label {
-
-    font-size: 0.55rem;
-
-    padding: 8px 14px;
-
-    margin-bottom: 1px !important;
-    }
-    .hero-content h1 {
-
-        font-size: clamp(1.15rem, 6vw, 2rem);
-
-        line-height: 1.3;
-
-        margin-bottom: 10px;
-
-        max-width: 95%;
-
-        letter-spacing: 0;
+    .price-buy-container {
+        gap: 8px;
     }
 
-    .hero-btn {
-
-        padding: 15px 30px;
-
-        font-size: 0.85rem;
-    }
-}
-
-@media (max-width: 480px) {
-
-    .hero-video {
-        object-position: center;
+    .price {
+        font-size: 1.15rem;
     }
 
-    .hero-content h1 {
+    .btn-buy {
+        padding: 10px 20px;
 
-        font-size: clamp(1rem, 5vw, 1.5rem);
-
-        line-height: 1.35;
+        font-size: 0.9rem;
     }
-
-    .hero-btn {
-
-        width: 100%;
-
-        max-width: 240px;
-    }
-}
-@media (max-width: 992px) {
-
-    .hero-label {
-
-        transform: translateX(-120px);
-    }
-}
-
-@media (max-width: 768px) {
-
-    .hero-label {
-
-        transform: translateX(0);
-
-        font-size: 0.55rem;
-
-        padding: 2px 8px;
-
-        margin-bottom: 14px;
-    }
-}
-@media (max-width: 820px) {
-
-    .hero-content {
-
-        max-width: 680px;
-
-        align-items: center;
-    }
-
-    .hero-content h1 {
-
-        width: 100%;
-
-        text-align: left;
-    }
-
-    .hero-label {
-
-        align-self: flex-start;
-    }
-}
-@media (min-width: 768px) and (max-width: 900px) {
-
-    .hero-text-wrap {
-
-        width: 100%;
-
-        max-width: 560px;
-    }
-
-    .hero-content h1 {
-
-        font-size: 2rem;
-
-        line-height: 1.22;
-    }
-
-    .hero-label {
-
-        margin-left: 2px;
-    }
-}
-/* ==================== CINEMATIC TRANSITION ==================== */
-
-.hero-section::after {
-    content: '';
-
-    position: absolute;
-
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: 220px;
-
-    background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0),
-        #000
-    );
-
-    z-index: 2;
-    pointer-events: none;
-}
-/* ==================== HEADER ==================== */
-
-.header {
-
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-
-    height: 58px;
-
-    z-index: 9999;
-
-    padding: 0 22px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    background: rgba(0,0,0,0.82);
-
-    backdrop-filter: blur(10px);
-}
-
-/* ==================== NAV ==================== */
-
-.header .nav-container {
-
-    width: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    max-width: 1400px;
-
-    margin: 0 auto;
-}
-
-/* ==================== LOGO ==================== */
-
-.logo {
-
-    display: flex;
-
-    align-items: center;
-
-    margin: 0;
-
-    padding: 0;
-
-    z-index: 10001;
-}
-
-.logo img {
-
-    height: 46px;
-
-    width: auto;
-
-    display: block;
-}
-
-/* ==================== DESKTOP SOCIALS ==================== */
-
-.desktop-socials {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 18px;
-}
-
-.social-icon {
-
-    color: #fff;
-
-    font-size: 1rem;
-
-    transition:
-        transform 0.3s ease,
-        opacity 0.3s ease;
-}
-
-.social-icon:hover {
-
-    transform: translateY(-3px);
-
-    opacity: 0.7;
-}
-
-/* ==================== BURGER ==================== */
-
-.burger-btn {
-
-    width: 40px;
-
-    height: 40px;
-
-    border: none;
-
-    background: transparent;
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    position: relative;
-
-    cursor: pointer;
-
-    z-index: 100001;
-}
-
-.burger-btn span {
-
-    position: absolute;
-
-    width: 22px;
-
-    height: 1.5px;
-
-    background: #fff;
-
-    transition: 0.35s ease;
-}
-
-.burger-btn span:nth-child(1) {
-
-    transform: translateY(-4px);
-}
-
-.burger-btn span:nth-child(2) {
-
-    transform: translateY(4px);
-}
-
-/* ACTIVE */
-
-.burger-btn.active span:nth-child(1) {
-
-    transform: rotate(45deg);
-}
-
-.burger-btn.active span:nth-child(2) {
-
-    transform: rotate(-45deg);
-}
-
-/* ==================== MOBILE MENU ==================== */
-
-.mobile-menu {
-
-    position: fixed;
-
-    top: 58px;
-
-    left: 0;
-
-    width: 100%;
-
-    padding: 28px 22px;
-
-    background: rgba(0,0,0,0.94);
-
-    backdrop-filter: blur(18px);
-
-    z-index: 99998;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 24px;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transform: translateY(-12px);
-
-    transition:
-        opacity 0.35s ease,
-        transform 0.35s ease,
-        visibility 0.35s ease;
-}
-
-.mobile-menu.active {
-
-    opacity: 1;
-
-    visibility: visible;
-
-    transform: translateY(0);
-}
-
-/* ==================== MOBILE LINKS ==================== */
-
-.mobile-social {
-
-    color: #fff;
-
-    text-decoration: none;
-
-    font-family: 'Benzin', Arial, sans-serif;
-
-    font-size: 0.9rem;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
-}
-
-.mobile-social:hover {
-
-    opacity: 0.7;
-
-    transform: translateX(4px);
-}
-
-/* ==================== TABLET ==================== */
-
-@media (max-width: 992px) {
-
-    .header {
-
-        height: 52px;
-
-        top: 0;
-    }
-
-    .logo img {
-
-        height: 42px;
-    }
-
-    .mobile-menu {
-
-        top: 52px;
-    }
-
-    .marquee-container {
-
-        margin-top: 52px;
-    }
-}
-
-/* ==================== MOBILE ==================== */
-
-@media (max-width: 768px) {
-
-    .header {
-
-        top: 0;
-
-        height: 46px;
-
-        padding: 0 16px;
-    }
-
-    .header .nav-container {
-
-        display: flex;
-
-        flex-direction: row !important;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        width: 100%;
-
-        padding: 0;
-    }
-
-    .logo img {
-
-        height: 36px;
-    }
-
-    .desktop-socials {
-
-        display: none !important;
-    }
-
-    .burger-btn {
-
-        display: flex !important;
-
-        margin-left: auto;
-    }
-
-    .mobile-menu {
-
-        top: 46px;
-
-        padding: 24px 20px;
-    }
-
-    .marquee-container {
-
-        margin-top: 46px;
-    }
-}
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-
-  z-index: 1000;
-
-  transition:
-    transform 0.4s ease,
-    opacity 0.4s ease;
-
-  will-change: transform;
-
-  transform: translateY(0);
-}
-
-header.hide {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-.page-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  backdrop-filter: blur(0px);
-  background: rgba(0,0,0,0);
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition: all 0.6s ease;
-  z-index: 9999;
-}
-
-.page-overlay.active {
-  backdrop-filter: blur(12px);
-  background: rgba(0,0,0,0.4);
-  opacity: 1;
 }
