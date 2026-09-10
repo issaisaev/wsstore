@@ -1,520 +1,460 @@
-// ==================== PRELOADER ====================
-
-// Создаём прелоадер динамически
-const preloader = document.createElement('div');
-
-preloader.id = 'preloader';
-
-preloader.innerHTML = `
-  <div class="preloader-content">
-
-    <div class="logo-container">
-      <img
-        src="images/mount.png"
-        alt="Логотип сайта"
-        class="preloader-logo"
-      >
-    </div>
-
-    <div class="progress-container">
-
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-
-      <div class="progress-text">0%</div>
-
-    </div>
-
-  </div>
-`;
-
-document.body.appendChild(preloader);
-
-
-// Элементы прелоадера
-const progressFill = preloader.querySelector('.progress-fill');
-const progressText = preloader.querySelector('.progress-text');
-
-
-// Переменные
-let isPreloaderHidden = false;
-let progress = 0;
-let interval;
-
-
-// ==================== ПРОГРЕСС ПРЕЛОАДЕРА ====================
-
-function updateProgress() {
-
-  progress += Math.random() * 3 + 1;
-
-  if (progress >= 100) {
-
-    progress = 100;
-
-    clearInterval(interval);
-
-    hidePreloader();
-
-  }
-
-  if (progressFill) {
-    progressFill.style.width = `${progress}%`;
-  }
-
-  if (progressText) {
-    progressText.textContent = `${Math.floor(progress)}%`;
-  }
-
-}
-
-
-// ==================== СКРЫТИЕ ПРЕЛОАДЕРА ====================
-
-function hidePreloader() {
-
-  if (isPreloaderHidden) return;
-
-  isPreloaderHidden = true;
-
-  setTimeout(() => {
-
-    if (!preloader) return;
-
-    preloader.classList.add('loaded');
-
-    setTimeout(() => {
-
-      if (preloader && preloader.parentNode) {
-        preloader.remove();
-      }
-
-    }, 500);
-
-  }, 500);
-
-}
-
-
-// Запускаем прогресс
-interval = setInterval(updateProgress, 150);
-
-
-// Принудительное скрытие через 15 секунд
-setTimeout(() => {
-
-  if (
-    preloader &&
-    !preloader.classList.contains('loaded')
-  ) {
-
-    clearInterval(interval);
-
-    progress = 100;
-
-    if (progressFill) {
-      progressFill.style.width = '100%';
-    }
-
-    if (progressText) {
-      progressText.textContent = '100%';
-    }
-
-    hidePreloader();
-
-  }
-
-}, 15000);
-
-
-// Скрытие после полной загрузки страницы
-window.addEventListener('load', () => {
-
-  setTimeout(() => {
-
-    clearInterval(interval);
-
-    if (progressFill) {
-      progressFill.style.width = '100%';
-    }
-
-    if (progressText) {
-      progressText.textContent = '100%';
-    }
-
-    hidePreloader();
-
-  }, 500);
-
-});
-
-
-// ==================== ОСНОВНОЙ КОД САЙТА ====================
-
 document.addEventListener('DOMContentLoaded', function () {
 
+    // ==================== PRELOADER ====================
 
-  // ==================== АНИМАЦИЯ КАРТОЧЕК ====================
+    const preloader = document.createElement('div');
 
-  const productCards =
-    document.querySelectorAll('.product-card');
+    preloader.id = 'preloader';
 
-  let cardObserver;
+    preloader.innerHTML = `
+        <div class="preloader-content">
 
-  if (productCards.length > 0) {
+            <div class="logo-container">
+                <img
+                    src="images/mount.png"
+                    alt="Логотип сайта"
+                    class="preloader-logo"
+                >
+            </div>
 
-    cardObserver = new IntersectionObserver(
-      (entries) => {
+            <div class="progress-container">
 
-        entries.forEach(entry => {
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
 
-          if (entry.isIntersecting) {
+                <div class="progress-text">0%</div>
 
-            entry.target.classList.add('visible');
+            </div>
 
-          }
+        </div>
+    `;
+
+    document.body.appendChild(preloader);
+
+
+    const progressFill =
+        preloader.querySelector('.progress-fill');
+
+    const progressText =
+        preloader.querySelector('.progress-text');
+
+
+    let progress = 0;
+    let isHidden = false;
+
+
+    function hidePreloader() {
+
+        if (isHidden) return;
+
+        isHidden = true;
+
+        preloader.classList.add('loaded');
+
+        setTimeout(() => {
+
+            if (preloader.parentNode) {
+                preloader.remove();
+            }
+
+        }, 600);
+
+    }
+
+
+    function updateProgress() {
+
+        if (isHidden) return;
+
+        progress += Math.random() * 4 + 1;
+
+        if (progress >= 100) {
+            progress = 100;
+        }
+
+        if (progressFill) {
+            progressFill.style.width = progress + '%';
+        }
+
+        if (progressText) {
+            progressText.textContent =
+                Math.floor(progress) + '%';
+        }
+
+        if (progress >= 100) {
+            clearInterval(progressInterval);
+
+            setTimeout(hidePreloader, 300);
+        }
+
+    }
+
+
+    const progressInterval =
+        setInterval(updateProgress, 150);
+
+
+    // На случай ошибки загрузки
+    setTimeout(() => {
+
+        clearInterval(progressInterval);
+
+        if (progressFill) {
+            progressFill.style.width = '100%';
+        }
+
+        if (progressText) {
+            progressText.textContent = '100%';
+        }
+
+        hidePreloader();
+
+    }, 10000);
+
+
+    // ==================== BURGER ====================
+
+    const burgerBtn =
+        document.querySelector('.burger-btn');
+
+    const mobileMenu =
+        document.querySelector('.mobile-menu');
+
+
+    if (burgerBtn && mobileMenu) {
+
+        burgerBtn.addEventListener('click', function (e) {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            burgerBtn.classList.toggle('active');
+
+            mobileMenu.classList.toggle('active');
 
         });
 
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      }
-    );
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll('a');
 
 
-    productCards.forEach(card => {
+        mobileLinks.forEach(link => {
 
-      cardObserver.observe(card);
+            link.addEventListener('click', function () {
 
-    });
+                burgerBtn.classList.remove('active');
 
-  }
+                mobileMenu.classList.remove('active');
 
+            });
 
-  // ==================== ПЛАВНЫЙ СКРОЛЛ ====================
-
-  document
-    .querySelectorAll('a[href^="#"]')
-    .forEach(anchor => {
-
-      anchor.addEventListener('click', function (e) {
-
-        const targetId =
-          this.getAttribute('href');
-
-        // Если это просто "#"
-        if (
-          targetId === '#' ||
-          !targetId.startsWith('#')
-        ) {
-          return;
-        }
-
-        const target =
-          document.querySelector(targetId);
-
-        if (target) {
-
-          e.preventDefault();
-
-          const header =
-            document.querySelector('.header');
-
-          const headerHeight =
-            header ? header.offsetHeight : 0;
-
-          window.scrollTo({
-
-            top:
-              target.offsetTop -
-              headerHeight -
-              20,
-
-            behavior: 'smooth'
-
-          });
-
-        }
-
-      });
-
-    });
-
-
-  // ==================== ПУЛЬСАЦИЯ КНОПКИ ====================
-
-  const firstBuyButton =
-    document.querySelector('.btn-buy');
-
-  if (firstBuyButton) {
-
-    setTimeout(() => {
-
-      firstBuyButton.style.animation =
-        'pulse 2s infinite';
-
-    }, 2000);
-
-  }
-
-
-  // ==================== КНОПКИ "КУПИТЬ" ====================
-
-  document
-    .querySelectorAll('.btn-buy')
-    .forEach(button => {
-
-      button.addEventListener('click', function () {
-
-        const productCard =
-          this.closest('.product-card');
-
-        const productName =
-          productCard
-            ?.querySelector('h3')
-            ?.textContent
-            ?.trim();
-
-        console.log(
-          'Купить:',
-          productName || 'Товар'
-        );
-
-      });
-
-    });
-
-
-  // ==================== ПРОГРЕСС СКРОЛЛА ====================
-
-  function updateScrollProgress() {
-
-    const scrollTop =
-      window.pageYOffset ||
-      document.documentElement.scrollTop;
-
-    const docHeight =
-      document.documentElement.scrollHeight -
-      window.innerHeight;
-
-    let scrollProgress = 0;
-
-    if (docHeight > 0) {
-
-      scrollProgress =
-        (scrollTop / docHeight) * 100;
+        });
 
     }
 
-    const bar =
-      document.querySelector(
-        '.scroll-progress .progress-bar'
-      );
 
-    if (bar) {
+    // ==================== СОСТАВ / ОПИСАНИЕ ====================
 
-      bar.style.width =
-        `${Math.min(
-          Math.max(scrollProgress, 0),
-          100
-        )}%`;
-
-    }
-
-  }
+    const sectionHeaders =
+        document.querySelectorAll('.section-header');
 
 
-  window.addEventListener(
-    'scroll',
-    updateScrollProgress,
-    { passive: true }
-  );
+    sectionHeaders.forEach(header => {
 
-  window.addEventListener(
-    'resize',
-    updateScrollProgress
-  );
+        header.addEventListener('click', function (e) {
 
-  updateScrollProgress();
+            e.preventDefault();
+
+            e.stopPropagation();
 
 
-});
+            const content =
+                this.nextElementSibling;
+
+            const icon =
+                this.querySelector('.icon');
 
 
-// ==================== СОСТАВ / ОПИСАНИЕ ====================
-
-document.addEventListener(
-  'DOMContentLoaded',
-  () => {
-
-    document
-      .querySelectorAll('.section-header')
-      .forEach(header => {
-
-        const content =
-          header.nextElementSibling;
-
-        const icon =
-          header.querySelector('.icon');
+            if (!content) return;
 
 
-        // Проверяем наличие элементов
-        if (!content || !icon) {
-          return;
-        }
+            const isOpen =
+                content.classList.contains('active');
 
 
-        header.addEventListener(
-          'click',
-          () => {
+            if (isOpen) {
 
+                content.classList.remove('active');
 
-            // ==================== ЗАКРЫТИЕ ====================
+                if (icon) {
+                    icon.classList.remove('rotated');
+                    icon.textContent = '+';
+                }
 
-            if (content.style.display === 'block') {
+                setTimeout(() => {
 
-              content.classList.remove('active');
+                    if (
+                        !content.classList.contains('active')
+                    ) {
+                        content.style.display = 'none';
+                    }
 
-              icon.classList.remove('rotated');
-
-              icon.textContent = '+';
-
-
-              setTimeout(() => {
-
-                content.style.display = 'none';
-
-              }, 500);
-
+                }, 500);
 
             }
-
-            // ==================== ОТКРЫТИЕ ====================
 
             else {
 
-              content.style.display = 'block';
+                content.style.display = 'block';
 
-              // Небольшая задержка нужна,
-              // чтобы CSS-анимация успела запуститься
-              requestAnimationFrame(() => {
+                // Запускаем CSS-анимацию
+                requestAnimationFrame(() => {
+                    content.classList.add('active');
+                });
 
-                content.classList.add('active');
 
-              });
-
-              icon.classList.add('rotated');
-
-              icon.textContent = '×';
+                if (icon) {
+                    icon.classList.add('rotated');
+                    icon.textContent = '×';
+                }
 
             }
 
-          }
-        );
-
-      });
-
-  }
-);
-
-
-// ==================== MOBILE MENU ====================
-
-const burgerBtn =
-  document.querySelector('.burger-btn');
-
-const mobileMenu =
-  document.querySelector('.mobile-menu');
-
-
-if (burgerBtn && mobileMenu) {
-
-
-  // Открытие / закрытие меню
-  burgerBtn.addEventListener(
-    'click',
-    () => {
-
-      burgerBtn.classList.toggle('active');
-
-      mobileMenu.classList.toggle('active');
-
-    }
-  );
-
-
-  // Закрытие меню при нажатии
-  // на ссылку внутри меню
-  mobileMenu
-    .querySelectorAll('a')
-    .forEach(link => {
-
-      link.addEventListener(
-        'click',
-        () => {
-
-          burgerBtn.classList.remove('active');
-
-          mobileMenu.classList.remove('active');
-
-        }
-      );
+        });
 
     });
 
-}
+
+    // ==================== КНОПКА КУПИТЬ ====================
+
+    const buyButtons =
+        document.querySelectorAll('.btn-buy');
 
 
-// ==================== HEADER HIDE ON SCROLL ====================
+    buyButtons.forEach(button => {
 
-let lastScrollY = window.scrollY;
+        button.addEventListener('click', function () {
 
-const header =
-  document.querySelector('.header');
+            const productCard =
+                this.closest('.product-card');
 
-
-window.addEventListener(
-  'scroll',
-  () => {
-
-    if (!header) return;
-
-    const currentScrollY =
-      window.scrollY;
+            const productName =
+                productCard
+                    ?.querySelector('h3')
+                    ?.textContent
+                    ?.trim();
 
 
-    // В самом верху всегда показываем header
-    if (currentScrollY <= 10) {
+            console.log(
+                'Купить:',
+                productName || 'Товар'
+            );
 
-      header.classList.remove('hide');
+        });
 
-      lastScrollY = currentScrollY;
+    });
 
-      return;
+
+    // ==================== ПРОГРЕСС СКРОЛЛА ====================
+
+    const scrollBar =
+        document.querySelector(
+            '.scroll-progress .progress-bar'
+        );
+
+
+    function updateScrollProgress() {
+
+        if (!scrollBar) return;
+
+
+        const scrollTop =
+            window.pageYOffset ||
+            document.documentElement.scrollTop;
+
+
+        const documentHeight =
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
+
+        let percentage = 0;
+
+
+        if (documentHeight > 0) {
+
+            percentage =
+                (scrollTop / documentHeight) * 100;
+
+        }
+
+
+        percentage =
+            Math.min(
+                Math.max(percentage, 0),
+                100
+            );
+
+
+        scrollBar.style.width =
+            percentage + '%';
 
     }
 
 
-    // Скролл вниз — скрываем
-    if (currentScrollY > lastScrollY) {
+    window.addEventListener(
+        'scroll',
+        updateScrollProgress,
+        { passive: true }
+    );
 
-      header.classList.add('hide');
+
+    window.addEventListener(
+        'resize',
+        updateScrollProgress
+    );
+
+
+    updateScrollProgress();
+
+
+    // ==================== HEADER HIDE ON SCROLL ====================
+
+    const header =
+        document.querySelector('.header');
+
+
+    let lastScrollY =
+        window.scrollY;
+
+
+    if (header) {
+
+        window.addEventListener(
+            'scroll',
+            function () {
+
+                const currentScrollY =
+                    window.scrollY;
+
+
+                // В самом верху показываем
+                if (currentScrollY <= 10) {
+
+                    header.classList.remove('hide');
+
+                    lastScrollY =
+                        currentScrollY;
+
+                    return;
+
+                }
+
+
+                // Скроллим вниз
+                if (
+                    currentScrollY >
+                    lastScrollY
+                ) {
+
+                    header.classList.add('hide');
+
+                }
+
+                // Скроллим вверх
+                else {
+
+                    header.classList.remove('hide');
+
+                }
+
+
+                lastScrollY =
+                    currentScrollY;
+
+            },
+            { passive: true }
+        );
 
     }
 
-    // Скролл вверх — показываем
-    else {
 
-      header.classList.remove('hide');
+    // ==================== ПЛАВНЫЙ СКРОЛЛ ====================
+
+    document
+        .querySelectorAll('a[href^="#"]')
+        .forEach(anchor => {
+
+            anchor.addEventListener(
+                'click',
+                function (e) {
+
+                    const targetId =
+                        this.getAttribute('href');
+
+
+                    if (
+                        !targetId ||
+                        targetId === '#'
+                    ) {
+                        return;
+                    }
+
+
+                    const target =
+                        document.querySelector(targetId);
+
+
+                    if (!target) return;
+
+
+                    e.preventDefault();
+
+
+                    const header =
+                        document.querySelector('.header');
+
+
+                    const headerHeight =
+                        header
+                            ? header.offsetHeight
+                            : 0;
+
+
+                    window.scrollTo({
+
+                        top:
+                            target.offsetTop -
+                            headerHeight -
+                            20,
+
+                        behavior: 'smooth'
+
+                    });
+
+                }
+            );
+
+        });
+
+
+    // ==================== ПУЛЬС КНОПКИ ====================
+
+    const firstBuyButton =
+        document.querySelector('.btn-buy');
+
+
+    if (firstBuyButton) {
+
+        setTimeout(() => {
+
+            firstBuyButton.style.animation =
+                'pulse 2s infinite';
+
+        }, 2000);
 
     }
 
-
-    lastScrollY = currentScrollY;
-
-  },
-  { passive: true }
-);
+});
