@@ -919,8 +919,8 @@ body {
 
     background: linear-gradient(
         90deg,
-        #4CAF50,
-        #8BC34A
+        #45454539,
+        #2e2e2e
     );
 
     transition: width 0.1s ease;
@@ -1305,60 +1305,28 @@ body {
     }
 
 
-    /* ==================== ТОВАР ==================== */
+/* ==================== ТОВАР ==================== */
 
-    .products-section {
-        padding: 3rem 10px;
-    }
+.products-section {
+    padding: 3rem 10px;
+}
 
-    .product-card {
-        width: 330px;
+.product-card {
+    width: 330px;
+    max-width: calc(100vw - 20px);
+}
 
-        max-width: calc(100vw - 20px);
-    }
+.card-content {
+    padding: 1rem;
+}
 
+.card-content h3 {
+    font-size: 1.2rem;
+}
 
-    .card-content {
-        padding: 1rem;
-    }
-
-    .card-content h3 {
-        font-size: 1.2rem;
-    }
-
-    .card-content p {
-        font-size: 0.9rem;
-    }
-
-
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-
-        font-size: 22px;
-    }
-
-    .carousel-btn.prev {
-        left: 8px;
-    }
-
-    .carousel-btn.next {
-        right: 8px;
-    }
-
-
-    .carousel-dots {
-        bottom: 10px;
-
-        gap: 7px;
-    }
-
-    .carousel-dots .dot {
-        width: 9px;
-        height: 9px;
-    }
-
-
+.card-content p {
+    font-size: 0.9rem;
+}
     .price-buy-container {
         flex-direction: column;
 
